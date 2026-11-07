@@ -265,7 +265,7 @@ EOF
   ln -sf "$conf" /etc/nginx/sites-enabled/citizentech
   run nginx -t
   run systemctl enable nginx
-  run systemctl reload-or-restart nginx
+  run systemctl restart nginx
 }
 
 health_check() {
@@ -279,8 +279,12 @@ health_check() {
     done
     ok "Backend respondeu após ~$((i*2))s."
   fi
-  local code
-  code="$(curl -s -o /dev/null -w '%{http_code}' -m 5 -H "Host: $APP_DOMAIN" "http://127.0.0.1$APP_HEALTH_PATH")"
+  local code=""
+  for i in $(seq 1 15); do   # o Nginx leva alguns instantes para aplicar a nova configuração
+    code="$(curl -s -o /dev/null -w '%{http_code}' -m 5 -H "Host: $APP_DOMAIN" "http://127.0.0.1$APP_HEALTH_PATH")"
+    [[ "$code" =~ ^(2|3) ]] && break
+    sleep 1
+  done
   [[ "$code" =~ ^(2|3) ]] || die "Nginx devolveu HTTP $code para $APP_HEALTH_PATH"
   ok "Aplicação publicada: http://$APP_DOMAIN  (HTTP $code via Nginx)"
   audit "health_check" OK "http=$code"
