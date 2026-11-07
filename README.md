@@ -53,7 +53,7 @@ flowchart LR
 ├── Vagrantfile                  # VM Ubuntu 22.04 provisionada automaticamente
 ├── config/
 │   ├── citizentech.conf         # TODAS as variáveis (rede, app, limites de alerta)
-│   └── app.env                  # variáveis de ambiente da aplicação
+│   └── app.env.example          # modelo das variáveis de ambiente da aplicação
 ├── scripts/
 │   ├── lib/common.sh            # logs, auditoria, tratamento de erro
 │   ├── 01-infra.sh              # rede, IP, DNS, hostname, firewall, NTP
@@ -119,7 +119,7 @@ sudo APP_SOURCE=git APP_REPO_URL=https://github.com/equipe/citizentech-web.git \
 sudo APP_SOURCE=git APP_REPO_URL=https://github.com/equipe/citizentech-api.git APP_HEALTH_PATH=/ ./provision.sh
 ```
 
-Segredos (URL de banco, chaves de API) ficam em `config/app.env` ou direto em `/etc/citizentech/app.env`. Esse arquivo tem permissão `640` e os valores que já estão no servidor são preservados quando o provisionamento roda de novo.
+Segredos (URL de banco, chaves de API) ficam em `config/app.env.example` ou direto em `/etc/citizentech/app.env`. Esse arquivo tem permissão `640` e os valores que já estão no servidor são preservados quando o provisionamento roda de novo.
 
 ## 7. Monitoramento e alertas
 
