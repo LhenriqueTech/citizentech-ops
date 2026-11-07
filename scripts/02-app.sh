@@ -25,6 +25,9 @@ create_app_user() {
     audit "usuario_criado" OK "$APP_USER"
   fi
   mkdir -p "$APP_BASE" "$BIN_DIR" "$ENV_DIR"
+  # Diretório de dados persistente da aplicação (banco SQLite, locks): fora do código
+  install -d -m 750 -o "$APP_USER" -g "$APP_USER" "$APP_DATA_DIR"
+  audit "diretorio_dados" OK "$APP_DATA_DIR"
 }
 
 fetch_code() {
@@ -146,11 +149,11 @@ install_dependencies() {
 write_environment() {
   local tmp; tmp="$(mktemp)"
   [[ -f "$PROJECT_ROOT/config/app.env.example" ]] && cp "$PROJECT_ROOT/config/app.env.example" "$tmp"
-  # Preserva valores já existentes no servidor (ex.: segredos colocados à mão)
+  # Valores já existentes no servidor têm prioridade sobre o modelo (ex.: segredos trocados à mão)
   if [[ -f "$ENV_FILE" ]]; then
     while IFS='=' read -r k v; do
       [[ -z "$k" || "$k" == \#* ]] && continue
-      grep -qE "^${k}=" "$tmp" || echo "$k=$v" >> "$tmp"
+      set_kv "$tmp" "$k" "$v"
     done < "$ENV_FILE"
   fi
   set_kv "$tmp" PORT            "$APP_PORT"
@@ -159,6 +162,7 @@ write_environment() {
   set_kv "$tmp" APP_ENV         "$APP_ENV"
   set_kv "$tmp" NODE_ENV        "$APP_ENV"
   set_kv "$tmp" HOST            "127.0.0.1"
+  set_kv "$tmp" DATA_DIR        "$APP_DATA_DIR"
   install -m 640 -o root -g "$APP_USER" "$tmp" "$ENV_FILE"
   rm -f "$tmp"
   audit "variaveis_ambiente" OK "$ENV_FILE ($(grep -cvE '^\s*(#|$)' "$ENV_FILE") variáveis)"
