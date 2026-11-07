@@ -1,0 +1,202 @@
+$ tail -n 200 /var/log/citizentech/audit.log
+
+2026-11-07T18:02:39-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=hostname|status=OK|detail=
+2026-11-07T18:02:39-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=rede_ip|status=OK|detail=
+2026-11-07T18:02:39-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=dns|status=OK|detail=
+2026-11-07T18:02:39-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=fuso_ntp|status=OK|detail=
+2026-11-07T18:02:41-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=firewall|status=OK|detail=
+2026-11-07T18:02:41-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=sysstat|status=OK|detail=
+2026-11-07T18:02:41-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=script_fim|status=OK|detail=duracao=10s
+2026-11-07T18:02:41-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_infra|status=OK|detail=duracao=10s
+2026-11-07T18:02:41-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:02:46-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=pre_requisitos|status=OK|detail=
+2026-11-07T18:02:46-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=diretorio_dados|status=OK|detail=/var/lib/citizentech
+2026-11-07T18:02:46-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=usuario_app|status=OK|detail=
+2026-11-07T18:02:46-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=codigo_local|status=OK|detail=origem=/vagrant/app
+2026-11-07T18:02:46-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=codigo_fonte|status=OK|detail=
+2026-11-07T18:02:46-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=tipo_app|status=OK|detail=python
+2026-11-07T18:02:46-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=deteccao_stack|status=OK|detail=
+2026-11-07T18:02:47-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=dependencias|status=OK|detail=
+2026-11-07T18:02:47-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=variaveis_ambiente|status=OK|detail=/etc/citizentech/app.env (15 variáveis)
+2026-11-07T18:02:47-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=variaveis_ambiente|status=OK|detail=
+2026-11-07T18:02:47-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=servico_app|status=OK|detail=cmd=/opt/citizentech/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:5000 --access-logfile - app:app
+2026-11-07T18:02:47-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=servico_systemd|status=OK|detail=
+2026-11-07T18:02:48-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=nginx|status=OK|detail=
+2026-11-07T18:02:48-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=health_check|status=OK|detail=http=200
+2026-11-07T18:02:48-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=health_check|status=OK|detail=
+2026-11-07T18:02:48-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=script_fim|status=OK|detail=duracao=7s
+2026-11-07T18:02:48-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_app|status=OK|detail=duracao=7s
+2026-11-07T18:02:48-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:02:48-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=binarios_monitor|status=OK|detail=/usr/local/bin/citizentech-monitor{,-guard}
+2026-11-07T18:02:48-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=instalar_monitor|status=OK|detail=
+2026-11-07T18:02:48-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=config_monitor|status=OK|detail=
+2026-11-07T18:02:49-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=servico_monitor|status=OK|detail=
+2026-11-07T18:02:58-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=teste_tolerancia_falhas|status=OK|detail=pid 9163 -> 9280
+2026-11-07T18:02:58-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=teste_monitor|status=OK|detail=
+2026-11-07T18:02:58-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=script_fim|status=OK|detail=duracao=10s
+2026-11-07T18:02:58-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_monitor|status=OK|detail=duracao=10s
+2026-11-07T18:02:58-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:02:58-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=auditd|status=OK|detail=
+2026-11-07T18:02:58-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=journald|status=OK|detail=
+2026-11-07T18:02:58-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=logrotate|status=OK|detail=
+2026-11-07T18:02:58-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=relatorio|status=OK|detail=
+2026-11-07T18:02:58-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=script_fim|status=OK|detail=duracao=0s
+2026-11-07T18:02:58-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_audit|status=OK|detail=duracao=0s
+2026-11-07T18:02:58-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:02:59-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=checklist|status=OK|detail=
+2026-11-07T18:03:02-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=evidencias|status=OK|detail=
+2026-11-07T18:03:02-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=resultado_validacao|status=OK|detail=pass=19 fail=0
+2026-11-07T18:03:02-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=script_fim|status=OK|detail=duracao=4s
+2026-11-07T18:03:02-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_validate|status=OK|detail=duracao=4s
+2026-11-07T18:03:02-0300|run=20261107-180231-6488|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=script_fim|status=OK|detail=duracao=31s
+2026-11-07T18:05:25-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:05:25-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:05:29-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=pacotes_base|status=OK|detail=
+2026-11-07T18:05:29-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=hostname|status=OK|detail=
+2026-11-07T18:05:29-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=rede_ip|status=OK|detail=
+2026-11-07T18:05:29-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=dns|status=OK|detail=
+2026-11-07T18:05:29-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=fuso_ntp|status=OK|detail=
+2026-11-07T18:05:31-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=firewall|status=OK|detail=
+2026-11-07T18:05:31-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=sysstat|status=OK|detail=
+2026-11-07T18:05:31-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=script_fim|status=OK|detail=duracao=6s
+2026-11-07T18:05:31-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_infra|status=OK|detail=duracao=6s
+2026-11-07T18:05:32-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:05:36-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=pre_requisitos|status=OK|detail=
+2026-11-07T18:05:36-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=diretorio_dados|status=OK|detail=/var/lib/citizentech
+2026-11-07T18:05:36-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=usuario_app|status=OK|detail=
+2026-11-07T18:05:36-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=codigo_local|status=OK|detail=origem=/vagrant/app
+2026-11-07T18:05:36-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=codigo_fonte|status=OK|detail=
+2026-11-07T18:05:36-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=tipo_app|status=OK|detail=python
+2026-11-07T18:05:36-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=deteccao_stack|status=OK|detail=
+2026-11-07T18:05:37-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=dependencias|status=OK|detail=
+2026-11-07T18:05:37-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=variaveis_ambiente|status=OK|detail=/etc/citizentech/app.env (15 variáveis)
+2026-11-07T18:05:37-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=variaveis_ambiente|status=OK|detail=
+2026-11-07T18:05:38-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=servico_app|status=OK|detail=cmd=/opt/citizentech/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:5000 --access-logfile - app:app
+2026-11-07T18:05:38-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=servico_systemd|status=OK|detail=
+2026-11-07T18:05:38-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=nginx|status=OK|detail=
+2026-11-07T18:05:38-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=health_check|status=OK|detail=http=200
+2026-11-07T18:05:38-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=health_check|status=OK|detail=
+2026-11-07T18:05:38-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=script_fim|status=OK|detail=duracao=6s
+2026-11-07T18:05:38-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_app|status=OK|detail=duracao=6s
+2026-11-07T18:05:38-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:05:38-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=binarios_monitor|status=OK|detail=/usr/local/bin/citizentech-monitor{,-guard}
+2026-11-07T18:05:38-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=instalar_monitor|status=OK|detail=
+2026-11-07T18:05:38-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=config_monitor|status=OK|detail=
+2026-11-07T18:05:54-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=servico_monitor|status=OK|detail=
+2026-11-07T18:06:03-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=teste_tolerancia_falhas|status=OK|detail=pid 12944 -> 13063
+2026-11-07T18:06:03-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=teste_monitor|status=OK|detail=
+2026-11-07T18:06:03-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=script_fim|status=OK|detail=duracao=25s
+2026-11-07T18:06:03-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_monitor|status=OK|detail=duracao=25s
+2026-11-07T18:06:03-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:06:04-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=auditd|status=OK|detail=
+2026-11-07T18:06:04-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=journald|status=OK|detail=
+2026-11-07T18:06:04-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=logrotate|status=OK|detail=
+2026-11-07T18:06:04-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=relatorio|status=OK|detail=
+2026-11-07T18:06:04-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=script_fim|status=OK|detail=duracao=1s
+2026-11-07T18:06:04-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_audit|status=OK|detail=duracao=1s
+2026-11-07T18:06:04-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:06:04-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=checklist|status=OK|detail=
+2026-11-07T18:06:07-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=evidencias|status=OK|detail=
+2026-11-07T18:06:07-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=resultado_validacao|status=OK|detail=pass=19 fail=0
+2026-11-07T18:06:07-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=script_fim|status=OK|detail=duracao=3s
+2026-11-07T18:06:07-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_validate|status=OK|detail=duracao=3s
+2026-11-07T18:06:07-0300|run=20261107-180525-10259|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=script_fim|status=OK|detail=duracao=42s
+2026-11-07T18:08:04-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:08:04-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:08:08-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=pacotes_base|status=OK|detail=
+2026-11-07T18:08:09-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=hostname|status=OK|detail=
+2026-11-07T18:08:09-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=rede_ip|status=OK|detail=
+2026-11-07T18:08:09-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=dns|status=OK|detail=
+2026-11-07T18:08:09-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=fuso_ntp|status=OK|detail=
+2026-11-07T18:08:10-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=firewall|status=OK|detail=
+2026-11-07T18:08:11-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=sysstat|status=OK|detail=
+2026-11-07T18:08:11-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=script_fim|status=OK|detail=duracao=7s
+2026-11-07T18:08:11-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_infra|status=OK|detail=duracao=7s
+2026-11-07T18:08:11-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:08:15-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=pre_requisitos|status=OK|detail=
+2026-11-07T18:08:15-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=diretorio_dados|status=OK|detail=/var/lib/citizentech
+2026-11-07T18:08:15-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=usuario_app|status=OK|detail=
+2026-11-07T18:08:15-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=codigo_local|status=OK|detail=origem=/vagrant/app
+2026-11-07T18:08:15-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=codigo_fonte|status=OK|detail=
+2026-11-07T18:08:15-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=tipo_app|status=OK|detail=python
+2026-11-07T18:08:15-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=deteccao_stack|status=OK|detail=
+2026-11-07T18:08:16-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=dependencias|status=OK|detail=
+2026-11-07T18:08:16-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=variaveis_ambiente|status=OK|detail=/etc/citizentech/app.env (15 variáveis)
+2026-11-07T18:08:16-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=variaveis_ambiente|status=OK|detail=
+2026-11-07T18:08:17-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=servico_app|status=OK|detail=cmd=/opt/citizentech/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:5000 --access-logfile - app:app
+2026-11-07T18:08:17-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=servico_systemd|status=OK|detail=
+2026-11-07T18:08:17-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=nginx|status=OK|detail=
+2026-11-07T18:08:17-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=health_check|status=OK|detail=http=200
+2026-11-07T18:08:17-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=health_check|status=OK|detail=
+2026-11-07T18:08:17-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=script_fim|status=OK|detail=duracao=6s
+2026-11-07T18:08:17-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_app|status=OK|detail=duracao=6s
+2026-11-07T18:08:17-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:08:17-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=binarios_monitor|status=OK|detail=/usr/local/bin/citizentech-monitor{,-guard}
+2026-11-07T18:08:17-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=instalar_monitor|status=OK|detail=
+2026-11-07T18:08:17-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=config_monitor|status=OK|detail=
+2026-11-07T18:08:18-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=servico_monitor|status=OK|detail=
+2026-11-07T18:08:27-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=teste_tolerancia_falhas|status=OK|detail=pid 16692 -> 16809
+2026-11-07T18:08:27-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=teste_monitor|status=OK|detail=
+2026-11-07T18:08:27-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=script_fim|status=OK|detail=duracao=10s
+2026-11-07T18:08:27-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_monitor|status=OK|detail=duracao=10s
+2026-11-07T18:08:27-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:08:28-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=auditd|status=OK|detail=
+2026-11-07T18:08:28-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=journald|status=OK|detail=
+2026-11-07T18:08:28-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=logrotate|status=OK|detail=
+2026-11-07T18:08:28-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=relatorio|status=OK|detail=
+2026-11-07T18:08:28-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=script_fim|status=OK|detail=duracao=1s
+2026-11-07T18:08:28-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_audit|status=OK|detail=duracao=1s
+2026-11-07T18:08:28-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:08:28-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=checklist|status=OK|detail=
+2026-11-07T18:08:31-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=evidencias|status=OK|detail=
+2026-11-07T18:08:31-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=resultado_validacao|status=OK|detail=pass=19 fail=0
+2026-11-07T18:08:31-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=script_fim|status=OK|detail=duracao=3s
+2026-11-07T18:08:31-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_validate|status=OK|detail=duracao=3s
+2026-11-07T18:08:31-0300|run=20261107-180804-14010|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=script_fim|status=OK|detail=duracao=27s
+2026-11-07T18:11:57-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:11:57-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:12:01-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=pacotes_base|status=OK|detail=
+2026-11-07T18:12:01-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=hostname|status=OK|detail=
+2026-11-07T18:12:01-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=rede_ip|status=OK|detail=
+2026-11-07T18:12:01-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=dns|status=OK|detail=
+2026-11-07T18:12:02-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=fuso_ntp|status=OK|detail=
+2026-11-07T18:12:03-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=firewall|status=OK|detail=
+2026-11-07T18:12:03-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=sysstat|status=OK|detail=
+2026-11-07T18:12:03-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=01-infra.sh|action=script_fim|status=OK|detail=duracao=6s
+2026-11-07T18:12:03-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_infra|status=OK|detail=duracao=6s
+2026-11-07T18:12:04-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:12:08-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=pre_requisitos|status=OK|detail=
+2026-11-07T18:12:08-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=diretorio_dados|status=OK|detail=/var/lib/citizentech
+2026-11-07T18:12:08-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=usuario_app|status=OK|detail=
+2026-11-07T18:12:08-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=codigo_local|status=OK|detail=origem=/vagrant/app
+2026-11-07T18:12:08-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=codigo_fonte|status=OK|detail=
+2026-11-07T18:12:08-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=tipo_app|status=OK|detail=python
+2026-11-07T18:12:08-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=deteccao_stack|status=OK|detail=
+2026-11-07T18:12:09-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=dependencias|status=OK|detail=
+2026-11-07T18:12:09-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=variaveis_ambiente|status=OK|detail=/etc/citizentech/app.env (15 variáveis)
+2026-11-07T18:12:09-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=variaveis_ambiente|status=OK|detail=
+2026-11-07T18:12:09-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=servico_app|status=OK|detail=cmd=/opt/citizentech/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:5000 --access-logfile - app:app
+2026-11-07T18:12:09-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=servico_systemd|status=OK|detail=
+2026-11-07T18:12:10-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=nginx|status=OK|detail=
+2026-11-07T18:12:10-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=health_check|status=OK|detail=http=200
+2026-11-07T18:12:10-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=health_check|status=OK|detail=
+2026-11-07T18:12:10-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=02-app.sh|action=script_fim|status=OK|detail=duracao=6s
+2026-11-07T18:12:10-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_app|status=OK|detail=duracao=7s
+2026-11-07T18:12:10-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:12:10-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=binarios_monitor|status=OK|detail=/usr/local/bin/citizentech-monitor{,-guard}
+2026-11-07T18:12:10-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=instalar_monitor|status=OK|detail=
+2026-11-07T18:12:10-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=config_monitor|status=OK|detail=
+2026-11-07T18:12:11-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=servico_monitor|status=OK|detail=
+2026-11-07T18:12:20-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=teste_tolerancia_falhas|status=OK|detail=pid 20540 -> 20657
+2026-11-07T18:12:20-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=teste_monitor|status=OK|detail=
+2026-11-07T18:12:20-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=03-monitoring.sh|action=script_fim|status=OK|detail=duracao=10s
+2026-11-07T18:12:20-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_monitor|status=OK|detail=duracao=10s
+2026-11-07T18:12:20-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:12:20-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=auditd|status=OK|detail=
+2026-11-07T18:12:20-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=journald|status=OK|detail=
+2026-11-07T18:12:20-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=logrotate|status=OK|detail=
+2026-11-07T18:12:21-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=relatorio|status=OK|detail=
+2026-11-07T18:12:21-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=04-audit.sh|action=script_fim|status=OK|detail=duracao=1s
+2026-11-07T18:12:21-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=provision.sh|action=etapa_audit|status=OK|detail=duracao=1s
+2026-11-07T18:12:21-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-07T18:12:21-0300|run=20261107-181157-17877|user=root|sudo_user=vagrant|host=citizentech-srv01|script=05-validate.sh|action=checklist|status=OK|detail=

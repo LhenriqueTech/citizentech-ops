@@ -1,0 +1,39 @@
+$ /usr/local/bin/citizentech-monitor --status; echo; cat /etc/citizentech/monitor.conf
+
+== Últimas métricas (/var/log/citizentech/metrics.log)
+2026-11-07T18:11:25-0300 cpu=0% mem=18% disco[/]=6% load="0.03 0.05 0.01" http=200
+2026-11-07T18:11:41-0300 cpu=0% mem=18% disco[/]=6% load="0.02 0.05 0.01" http=200
+2026-11-07T18:11:57-0300 cpu=24% mem=18% disco[/]=6% load="0.02 0.04 0.01" http=200
+2026-11-07T18:12:12-0300 cpu=12% mem=18% disco[/]=6% load="0.25 0.09 0.02" http=200
+2026-11-07T18:12:12-0300 cpu=2% mem=18% disco[/]=6% load="0.25 0.09 0.02" http=200
+
+== Últimos alertas (/var/log/citizentech/alerts.log)
+2026-11-07T17:48:12-0300 [CRITICAL] host=citizentech-srv01 recurso=cpu uso em 100% (limite aviso=70% crítico=90%)
+2026-11-07T17:48:49-0300 [WARNING] host=citizentech-srv01 recurso=cpu uso em 86% (limite aviso=70% crítico=90%)
+2026-11-07T17:49:47-0300 [CRITICAL] host=citizentech-srv01 recurso=servico:citizentech-app serviço parado
+2026-11-07T17:49:48-0300 [RECOVERY] host=citizentech-srv01 recurso=servico:citizentech-app reiniciado automaticamente (auto-heal), respondendo após 1s
+2026-11-07T18:02:59-0300 [WARNING] host=citizentech-srv01 recurso=cpu uso em 89% (limite aviso=70% crítico=90%)
+2026-11-07T18:03:15-0300 [RECOVERY] host=citizentech-srv01 recurso=cpu normalizado: 0% (era WARNING)
+2026-11-07T18:06:04-0300 [WARNING] host=citizentech-srv01 recurso=cpu uso em 88% (limite aviso=70% crítico=90%)
+2026-11-07T18:06:20-0300 [RECOVERY] host=citizentech-srv01 recurso=cpu normalizado: 0% (era WARNING)
+2026-11-07T18:08:28-0300 [WARNING] host=citizentech-srv01 recurso=cpu uso em 89% (limite aviso=70% crítico=90%)
+2026-11-07T18:08:44-0300 [RECOVERY] host=citizentech-srv01 recurso=cpu normalizado: 0% (era WARNING)
+
+== Heartbeat: 9s atrás
+
+# Gerado por 03-monitoring.sh - 2026-11-07T18:12:10-03:00
+# Após editar: sudo systemctl reload citizentech-monitor
+INTERVAL=15
+CPU_WARN=70
+CPU_CRIT=90
+MEM_WARN=75
+MEM_CRIT=90
+DISK_WARN=80
+DISK_CRIT=90
+DISK_PATHS="/"
+ALERT_COOLDOWN=300
+ALERT_WEBHOOK_URL=""
+MONITOR_SERVICES="citizentech-app nginx"
+AUTO_HEAL=true
+APP_HEALTH_URL="http://127.0.0.1/health"
+LOG_DIR=/var/log/citizentech

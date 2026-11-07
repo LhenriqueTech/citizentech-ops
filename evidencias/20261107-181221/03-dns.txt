@@ -1,0 +1,22 @@
+$ resolvectl status 2>/dev/null || cat /etc/resolv.conf; echo; getent hosts app.citizentech.local; dig +short github.com
+
+Global
+           Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+    resolv.conf mode: stub
+  Current DNS Server: 1.1.1.1
+         DNS Servers: 1.1.1.1 8.8.8.8
+Fallback DNS Servers: 9.9.9.9 8.8.4.4
+          DNS Domain: citizentech.local
+
+Link 2 (enp0s3)
+    Current Scopes: DNS
+         Protocols: +DefaultRoute +LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+Current DNS Server: 192.168.0.1
+       DNS Servers: 192.168.0.1 fd17:625c:f037:2::3
+
+Link 3 (enp0s8)
+Current Scopes: none
+     Protocols: -DefaultRoute +LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+
+10.0.2.15       app.citizentech.local
+4.228.31.150

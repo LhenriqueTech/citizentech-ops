@@ -1,0 +1,41 @@
+$ curl -si -H 'Host: app.citizentech.local' http://127.0.0.1/health; echo; curl -s -H 'Host: app.citizentech.local' http://127.0.0.1/ | head -n 30
+
+HTTP/1.1 200 OK
+Server: nginx/1.18.0 (Ubuntu)
+Date: Sat, 07 Nov 2026 21:12:21 GMT
+Content-Type: application/json
+Content-Length: 210
+Connection: keep-alive
+
+{"app":"semaforo-inteligente","cidade":"S\u00e3o Paulo","cruzamentos":6,"env":"production","host":"citizentech-srv01","simulador":true,"status":"ok","time":"2026-11-07T18:12:21","uptime_s":11,"versao":"1.0.0"}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CitizenTech · Semáforo Inteligente</title>
+<style>
+  :root { --bg:#0b1220; --panel:#111827; --line:#1f2a3d; --txt:#e5e7eb; --mut:#94a3b8;
+          --red:#e11d48; --green:#22c55e; --amber:#f59e0b; --blue:#60a5fa; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--txt); }
+  header { display:flex; align-items:center; justify-content:space-between; padding:18px 28px; border-bottom:3px solid var(--red); background:#0f172a; }
+  h1 { margin:0; font-size:24px; } h1 small { color:var(--mut); font-weight:400; font-size:15px; margin-left:8px; }
+  .meta { color:var(--mut); font-size:13px; } .meta a { color:#fb7185; }
+  main { display:grid; grid-template-columns: 1fr 340px; gap:20px; padding:20px 28px; }
+  .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:18px; }
+  .kpi { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+  .kpi b { display:block; font-size:28px; margin-top:4px; } .kpi span { color:var(--mut); font-size:13px; }
+  .kpi.good b { color:var(--green); } .kpi.warn b { color:var(--amber); }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px; position:relative; }
+  .card.emergencia { border-color:var(--red); box-shadow:0 0 0 2px rgba(225,29,72,.35); }
+  .card.seguranca { border-color:var(--amber); }
+  .card h3 { margin:0 0 2px; font-size:15px; } .card .id { color:var(--mut); font-size:12px; }
+  .badge { display:inline-block; margin-left:6px; font-size:10.5px; padding:3px 8px; border-radius:99px; background:#1e293b; color:var(--mut); text-transform:uppercase; letter-spacing:.04em; }
+  .badge.emergencia { background:var(--red); color:#fff; } .badge.seguranca { background:var(--amber); color:#111; } .badge.adaptativo { background:#14532d; color:#bbf7d0; }
+  .cross { display:grid; grid-template-columns:60px 70px 60px; grid-template-rows:42px 70px 42px; gap:4px; justify-content:center; margin:12px 0 8px; }
+  .road { background:#1e293b; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--mut); position:relative; overflow:hidden; }
+  .road .q { position:absolute; left:0; bottom:0; background:rgba(96,165,250,.35); width:100%; }
+  .road.h .q { top:0; height:100%; width:0; }

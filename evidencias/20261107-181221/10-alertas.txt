@@ -1,0 +1,72 @@
+$ cat /var/log/citizentech/alerts.log 2>/dev/null; echo; journalctl -t citizentech-monitor -t citizentech-guard --no-pager -n 50
+
+2026-11-07T17:00:09-0300 [CRITICAL] host=citizentech-srv01 recurso=cpu uso em 100% (limite aviso=70% crítico=90%)
+2026-11-07T17:00:41-0300 [RECOVERY] host=citizentech-srv01 recurso=cpu normalizado: 0% (era CRITICAL)
+2026-11-07T17:01:14-0300 [CRITICAL] host=citizentech-srv01 recurso=cpu uso em 100% (limite aviso=70% crítico=90%)
+2026-11-07T17:03:01-0300 [CRITICAL] host=citizentech-srv01 recurso=monitor guardião reiniciou o monitor: heartbeat parado há 107s (máx 70s)
+2026-11-07T17:03:02-0300 [RECOVERY] host=citizentech-srv01 recurso=cpu normalizado: 22% (era CRITICAL)
+2026-11-07T17:03:49-0300 [WARNING] host=citizentech-srv01 recurso=disco:/ uso em 83% (limite aviso=80% crítico=90%)
+2026-11-07T17:04:21-0300 [RECOVERY] host=citizentech-srv01 recurso=disco:/ normalizado: 6% (era WARNING)
+2026-11-07T17:04:58-0300 [CRITICAL] host=citizentech-srv01 recurso=servico:citizentech-app serviço parado
+2026-11-07T17:04:58-0300 [RECOVERY] host=citizentech-srv01 recurso=servico:citizentech-app reiniciado automaticamente (auto-heal)
+2026-11-07T17:04:58-0300 [CRITICAL] host=citizentech-srv01 recurso=http health check falhou (HTTP 502) em http://127.0.0.1/health
+2026-11-07T17:05:14-0300 [RECOVERY] host=citizentech-srv01 recurso=http aplicação respondendo (HTTP 200)
+2026-11-07T17:05:46-0300 [WARNING] host=citizentech-srv01 recurso=memoria uso em 80% (limite aviso=75% crítico=90%)
+2026-11-07T17:06:34-0300 [RECOVERY] host=citizentech-srv01 recurso=memoria normalizado: 19% (era WARNING)
+2026-11-07T17:45:34-0300 [CRITICAL] host=citizentech-srv01 recurso=cpu uso em 100% (limite aviso=70% crítico=90%)
+2026-11-07T17:48:12-0300 [CRITICAL] host=citizentech-srv01 recurso=cpu uso em 100% (limite aviso=70% crítico=90%)
+2026-11-07T17:48:49-0300 [WARNING] host=citizentech-srv01 recurso=cpu uso em 86% (limite aviso=70% crítico=90%)
+2026-11-07T17:49:47-0300 [CRITICAL] host=citizentech-srv01 recurso=servico:citizentech-app serviço parado
+2026-11-07T17:49:48-0300 [RECOVERY] host=citizentech-srv01 recurso=servico:citizentech-app reiniciado automaticamente (auto-heal), respondendo após 1s
+2026-11-07T18:02:59-0300 [WARNING] host=citizentech-srv01 recurso=cpu uso em 89% (limite aviso=70% crítico=90%)
+2026-11-07T18:03:15-0300 [RECOVERY] host=citizentech-srv01 recurso=cpu normalizado: 0% (era WARNING)
+2026-11-07T18:06:04-0300 [WARNING] host=citizentech-srv01 recurso=cpu uso em 88% (limite aviso=70% crítico=90%)
+2026-11-07T18:06:20-0300 [RECOVERY] host=citizentech-srv01 recurso=cpu normalizado: 0% (era WARNING)
+2026-11-07T18:08:28-0300 [WARNING] host=citizentech-srv01 recurso=cpu uso em 89% (limite aviso=70% crítico=90%)
+2026-11-07T18:08:44-0300 [RECOVERY] host=citizentech-srv01 recurso=cpu normalizado: 0% (era WARNING)
+2026-11-07T18:12:21-0300 [WARNING] host=citizentech-srv01 recurso=cpu uso em 86% (limite aviso=70% crítico=90%)
+
+Nov 07 16:51:57 citizentech-srv01 citizentech-monitor[8554]: monitor iniciado pid=8545
+Nov 07 16:51:57 citizentech-srv01 citizentech-monitor[8563]: monitor iniciado pid=8556
+Nov 07 16:52:06 citizentech-srv01 citizentech-monitor[8684]: monitor iniciado pid=8678
+Nov 07 17:00:09 citizentech-srv01 citizentech-monitor[10008]: CRITICAL cpu: uso em 100% (limite aviso=70% crítico=90%)
+Nov 07 17:00:41 citizentech-srv01 citizentech-monitor[10063]: RECOVERY cpu: normalizado: 0% (era CRITICAL)
+Nov 07 17:01:14 citizentech-srv01 citizentech-monitor[10123]: CRITICAL cpu: uso em 100% (limite aviso=70% crítico=90%)
+Nov 07 17:03:01 citizentech-srv01 citizentech-guard[10156]: 2026-11-07T17:03:01-0300 [CRITICAL] host=citizentech-srv01 recurso=monitor guardião reiniciou o monitor: heartbeat parado há 107s (máx 70s)
+Nov 07 17:03:02 citizentech-srv01 citizentech-monitor[10174]: RECOVERY cpu: normalizado: 22% (era CRITICAL)
+Nov 07 17:03:16 citizentech-srv01 citizentech-monitor[10193]: monitor iniciado pid=10190
+Nov 07 17:03:49 citizentech-srv01 citizentech-monitor[10260]: WARNING disco:/: uso em 83% (limite aviso=80% crítico=90%)
+Nov 07 17:04:21 citizentech-srv01 citizentech-monitor[10311]: RECOVERY disco:/: normalizado: 6% (era WARNING)
+Nov 07 17:04:41 citizentech-srv01 citizentech-monitor[10339]: monitor iniciado pid=10336
+Nov 07 17:04:58 citizentech-srv01 citizentech-monitor[10384]: CRITICAL servico:citizentech-app: serviço parado
+Nov 07 17:04:58 citizentech-srv01 citizentech-monitor[10392]: RECOVERY servico:citizentech-app: reiniciado automaticamente (auto-heal)
+Nov 07 17:04:58 citizentech-srv01 citizentech-monitor[10400]: CRITICAL http: health check falhou (HTTP 502) em http://127.0.0.1/health
+Nov 07 17:05:14 citizentech-srv01 citizentech-monitor[10747]: RECOVERY http: aplicação respondendo (HTTP 200)
+Nov 07 17:05:46 citizentech-srv01 citizentech-monitor[10863]: WARNING memoria: uso em 80% (limite aviso=75% crítico=90%)
+Nov 07 17:06:34 citizentech-srv01 citizentech-monitor[10929]: RECOVERY memoria: normalizado: 19% (era WARNING)
+-- Boot 96fb0e4404434c608f3fb73eba9b0206 --
+Nov 07 17:48:11 citizentech-srv01 citizentech-monitor[747]: monitor iniciado pid=714
+Nov 07 17:48:12 citizentech-srv01 citizentech-monitor[840]: CRITICAL cpu: uso em 100% (limite aviso=70% crítico=90%)
+Nov 07 17:48:38 citizentech-srv01 citizentech-monitor[4214]: monitor iniciado pid=4207
+Nov 07 17:48:48 citizentech-srv01 citizentech-monitor[4333]: monitor iniciado pid=4326
+Nov 07 17:48:49 citizentech-srv01 citizentech-monitor[4761]: WARNING cpu: uso em 86% (limite aviso=70% crítico=90%)
+Nov 07 17:48:55 citizentech-srv01 citizentech-monitor[5132]: monitor iniciado pid=5125
+Nov 07 17:49:05 citizentech-srv01 citizentech-monitor[5251]: monitor iniciado pid=5243
+Nov 07 17:49:30 citizentech-srv01 citizentech-monitor[5366]: monitor iniciado pid=5363
+Nov 07 17:49:47 citizentech-srv01 citizentech-monitor[5413]: CRITICAL servico:citizentech-app: serviço parado
+Nov 07 17:49:48 citizentech-srv01 citizentech-monitor[5426]: RECOVERY servico:citizentech-app: reiniciado automaticamente (auto-heal), respondendo após 1s
+Nov 07 18:02:48 citizentech-srv01 citizentech-monitor[9170]: monitor iniciado pid=9163
+Nov 07 18:02:58 citizentech-srv01 citizentech-monitor[9287]: monitor iniciado pid=9280
+Nov 07 18:02:59 citizentech-srv01 citizentech-monitor[9721]: WARNING cpu: uso em 89% (limite aviso=70% crítico=90%)
+Nov 07 18:03:15 citizentech-srv01 citizentech-monitor[9963]: RECOVERY cpu: normalizado: 0% (era WARNING)
+Nov 07 18:05:54 citizentech-srv01 citizentech-monitor[12951]: monitor iniciado pid=12944
+Nov 07 18:06:03 citizentech-srv01 citizentech-monitor[13066]: monitor iniciado pid=13063
+Nov 07 18:06:04 citizentech-srv01 citizentech-monitor[13507]: WARNING cpu: uso em 88% (limite aviso=70% crítico=90%)
+Nov 07 18:06:20 citizentech-srv01 citizentech-monitor[13737]: RECOVERY cpu: normalizado: 0% (era WARNING)
+Nov 07 18:08:18 citizentech-srv01 citizentech-monitor[16699]: monitor iniciado pid=16692
+Nov 07 18:08:27 citizentech-srv01 citizentech-monitor[16816]: monitor iniciado pid=16809
+Nov 07 18:08:28 citizentech-srv01 citizentech-monitor[17260]: WARNING cpu: uso em 89% (limite aviso=70% crítico=90%)
+Nov 07 18:08:44 citizentech-srv01 citizentech-monitor[17483]: RECOVERY cpu: normalizado: 0% (era WARNING)
+Nov 07 18:12:11 citizentech-srv01 citizentech-monitor[20547]: monitor iniciado pid=20540
+Nov 07 18:12:20 citizentech-srv01 citizentech-monitor[20664]: monitor iniciado pid=20657
+Nov 07 18:12:21 citizentech-srv01 citizentech-monitor[21099]: WARNING cpu: uso em 86% (limite aviso=70% crítico=90%)

@@ -1,0 +1,52 @@
+$ sed -E 's/=.*/=*** (oculto)/' /etc/citizentech/app.env; echo; cat /etc/systemd/system/citizentech-app.service 2>/dev/null
+
+# Variáveis de ambiente entregues à aplicação (copiadas para /etc/citizentech/app.env, permissão 640).
+# PORT, SERVER_PORT, ASPNETCORE_URLS, APP_ENV, NODE_ENV, HOST e DATA_DIR são preenchidas
+# automaticamente pelo script 02 a partir de config/citizentech.conf.
+#
+# Semáforo Inteligente — Central de Controle
+APP_NAME=*** (oculto)
+CIDADE=*** (oculto)
+NUM_CRUZAMENTOS=*** (oculto)
+CICLO_S=*** (oculto)
+VERDE_MIN_S=*** (oculto)
+SIMULADOR=*** (oculto)
+LOG_LEVEL=*** (oculto)
+# Token exigido nos POST da API (/api/sensores e /api/emergencias).
+# Troque direto na VM em /etc/citizentech/app.env (o valor já existente lá é preservado).
+API_TOKEN=*** (oculto)
+PORT=*** (oculto)
+SERVER_PORT=*** (oculto)
+ASPNETCORE_URLS=*** (oculto)
+APP_ENV=*** (oculto)
+NODE_ENV=*** (oculto)
+HOST=*** (oculto)
+DATA_DIR=*** (oculto)
+
+# Gerado por 02-app.sh - 2026-11-07T18:12:09-03:00
+[Unit]
+Description=CitizenTech - Aplicação Web (python)
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=10
+
+[Service]
+Type=simple
+User=citizentech
+Group=citizentech
+WorkingDirectory=/opt/citizentech/src
+EnvironmentFile=/etc/citizentech/app.env
+ExecStart=/opt/citizentech/bin/start-app.sh
+Restart=always
+RestartSec=5
+TimeoutStartSec=120
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=citizentech-app
+
+[Install]
+WantedBy=multi-user.target
