@@ -4,3 +4,9 @@ __pycache__/
 *.pyc
 venv/
 node_modules/
+vm-console.log
+vagrant-up.log
+vagrant-install.log
+setup-windows.log
+diagnostico.txt
+_to_delete/

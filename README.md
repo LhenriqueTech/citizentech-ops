@@ -80,6 +80,18 @@ vagrant up            # cria a VM e roda o provision.sh sozinho
 ```
 Acesse **http://localhost:8080** ou **http://192.168.56.10**. Para repetir o provisionamento, rode `vagrant provision` (os scripts são idempotentes).
 
+### Atalho no Windows (instala tudo sozinho)
+
+Dê dois cliques em **`INSTALAR-E-SUBIR-VM.bat`**. Ele pede permissão de administrador e faz o resto:
+
+1. Instala o VirtualBox e o Vagrant, se faltarem. Os instaladores precisam estar na pasta Downloads.
+2. Gera um diagnóstico de virtualização em `diagnostico.txt`.
+3. Roda `vagrant up`. Se a VM já existir, roda `vagrant provision`.
+
+O andamento fica em `setup-windows.log` e em `vagrant-up.log`.
+
+> Se o Windows estiver com a Plataforma de Máquina Virtual ou o Hyper-V ligados, o VirtualBox roda em modo de compatibilidade (NEM), que é mais lento mas funciona. O Vagrantfile já aumenta o tempo de espera do boot (`boot_timeout = 900`) e grava o console serial da VM em `vm-console.log`.
+
 ### Opção B: VM Ubuntu 22.04/24.04 já existente
 
 ```bash
@@ -179,6 +191,10 @@ sudo aureport -k -i --summary                               # resumo do auditd
 
 `sudo bash provision.sh validate` (ou `sudo bash scripts/05-validate.sh`) cria `evidencias/<data-hora>/` com o checklist e as saídas de `hostnamectl`, `ip`, `resolvectl`, `ufw`, `systemctl status`, `curl`, métricas, alertas, auditoria e `auditd`. Faça commit dessa pasta junto com o repositório.
 
+### Resultado da execução de referência
+
+Execução em 07/11/2026 numa VM Ubuntu 22.04 (VirtualBox 7.2.22 + Vagrant 2.4.9, Windows 11): **19 PASS / 0 FAIL**. As evidências estão em [`evidencias/20261107-165207/`](evidencias/20261107-165207/00-checklist.txt).
+
 ## 10. Solução de problemas
 
 | Sintoma | Verifique |
@@ -187,6 +203,7 @@ sudo aureport -k -i --summary                               # resumo do auditd
 | App não sobe | `journalctl -u citizentech-app -n 50` · confira `APP_PORT` e `APP_HEALTH_PATH` |
 | 502 Bad Gateway | o app precisa escutar em `127.0.0.1:$APP_PORT` (use as variáveis `PORT`/`SERVER_PORT`) |
 | DNS falha | `resolvectl status` · troque `DNS_SERVERS` |
+| `vagrant up` para em "Waiting for machine to boot" | Veja `diagnostico.txt` e `vm-console.log`. Com o Hyper-V ligado, o boot é mais lento. |
 | IP estático sem rede | use `NET_MODE=static` apenas na interface *host-only* (`NET_IFACE`) |
 
 ---
