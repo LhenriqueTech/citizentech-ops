@@ -1,0 +1,24 @@
+$ auditctl -l; echo; aureport -k -i --summary 2>/dev/null; echo; ausearch -k ct_config -i 2>/dev/null | tail -n 40
+
+-w /etc/hosts -p wa -k ct_rede
+-w /etc/netplan -p wa -k ct_rede
+-w /etc/systemd/resolved.conf.d -p wa -k ct_dns
+-w /etc/hostname -p wa -k ct_rede
+-w /etc/citizentech -p wa -k ct_config
+-w /etc/nginx -p wa -k ct_nginx
+-w /etc/systemd/system/citizentech-app.service -p wa -k ct_servicos
+-w /etc/systemd/system/citizentech-monitor.service -p wa -k ct_servicos
+-w /opt/citizentech/bin -p wa -k ct_app
+-w /usr/local/bin/citizentech-monitor -p x -k ct_exec_monitor
+-w /usr/sbin/useradd -p x -k ct_usuarios
+-w /etc/passwd -p wa -k ct_usuarios
+-w /etc/sudoers -p wa -k ct_sudo
+
+
+Key Summary Report
+===========================
+total  key
+===========================
+<no events of interest were found>
+
+

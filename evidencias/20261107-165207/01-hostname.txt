@@ -1,0 +1,30 @@
+$ hostnamectl; echo; cat /etc/hosts
+
+ Static hostname: citizentech-srv01
+       Icon name: computer-vm
+         Chassis: vm
+      Machine ID: b64a4990b5b0418781145744a6f1e917
+         Boot ID: 8a491d9dcccf4da09d086306cd5d38cd
+  Virtualization: oracle
+Operating System: Ubuntu 22.04.5 LTS
+          Kernel: Linux 5.15.0-203-generic
+    Architecture: x86-64
+ Hardware Vendor: innotek GmbH
+  Hardware Model: VirtualBox
+
+127.0.0.1	localhost
+
+# The following lines are desirable for IPv6 capable hosts
+::1	ip6-localhost	ip6-loopback
+fe00::0	ip6-localnet
+ff00::0	ip6-mcastprefix
+ff02::1	ip6-allnodes
+ff02::2	ip6-allrouters
+ff02::3	ip6-allhosts
+127.0.1.1	ubuntu-jammy	ubuntu-jammy
+
+127.0.2.1 citizentech-srv01 citizentech-srv01
+# BEGIN CITIZENTECH (gerado por 01-infra.sh em 2026-11-07T16:51:45-03:00)
+127.0.1.1   citizentech-srv01.citizentech.local citizentech-srv01
+10.0.2.15   app.citizentech.local
+# END CITIZENTECH

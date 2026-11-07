@@ -1,0 +1,29 @@
+$ ip -br addr; echo; ip route; echo; cat /etc/netplan/*.yaml 2>/dev/null
+
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp0s3           UP             10.0.2.15/24 metric 100 fd17:625c:f037:2:f6:40ff:fe8d:afc3/64 fe80::f6:40ff:fe8d:afc3/64 
+enp0s8           UP             192.168.56.10/24 fe80::a00:27ff:fe62:f755/64 
+
+default via 10.0.2.2 dev enp0s3 proto dhcp src 10.0.2.15 metric 100 
+10.0.2.0/24 dev enp0s3 proto kernel scope link src 10.0.2.15 metric 100 
+10.0.2.2 dev enp0s3 proto dhcp scope link src 10.0.2.15 metric 100 
+192.168.0.1 via 10.0.2.2 dev enp0s3 proto dhcp src 10.0.2.15 metric 100 
+192.168.56.0/24 dev enp0s8 proto kernel scope link src 192.168.56.10 
+
+network:
+  version: 2
+  ethernets:
+    enp0s3:
+      match:
+        macaddress: "02:f6:40:8d:af:c3"
+      dhcp4: true
+      dhcp6: true
+      set-name: "enp0s3"
+---
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp0s8:
+      addresses:
+      - 192.168.56.10/24

@@ -1,0 +1,6 @@
+$ cat /var/log/citizentech/alerts.log 2>/dev/null; echo; journalctl -t citizentech-monitor -t citizentech-guard --no-pager -n 50
+
+
+Nov 07 16:51:57 citizentech-srv01 citizentech-monitor[8554]: monitor iniciado pid=8545
+Nov 07 16:51:57 citizentech-srv01 citizentech-monitor[8563]: monitor iniciado pid=8556
+Nov 07 16:52:06 citizentech-srv01 citizentech-monitor[8684]: monitor iniciado pid=8678

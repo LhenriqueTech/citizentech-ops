@@ -1,0 +1,41 @@
+$ curl -si -H 'Host: app.citizentech.local' http://127.0.0.1/health; echo; curl -s -H 'Host: app.citizentech.local' http://127.0.0.1/ | head -n 30
+
+HTTP/1.1 200 OK
+Server: nginx/1.18.0 (Ubuntu)
+Date: Sat, 07 Nov 2026 19:52:08 GMT
+Content-Type: application/json
+Content-Length: 124
+Connection: keep-alive
+
+{"env":"production","host":"citizentech-srv01","python":"3.10.12","status":"ok","time":"2026-11-07T16:52:08","uptime_s":11}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CitizenTech</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; background: #0f172a; color: #e2e8f0; }
+    header { padding: 32px 40px; background: #111827; border-bottom: 3px solid #e11d48; }
+    h1 { margin: 0; font-size: 28px; }
+    main { padding: 32px 40px; max-width: 900px; }
+    .meta { color: #94a3b8; font-size: 14px; margin-top: 6px; }
+    table { width: 100%; border-collapse: collapse; background: #f8fafc; color: #0f172a; border-radius: 6px; overflow: hidden; }
+    th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+    th { background: #e2e8f0; }
+    a { color: #fb7185; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CitizenTech</h1>
+    <div class="meta">Servidor: citizentech-srv01 &middot; Ambiente: production &middot; <a href="/health">/health</a></div>
+  </header>
+  <main>
+    <h2>Solicitações dos cidadãos</h2>
+    <table>
+      <tr><th>#</th><th>Tipo</th><th>Bairro</th><th>Status</th></tr>
+      
+      <tr><td>1</td><td>Iluminação pública</td><td>Centro</td><td>Em andamento</td></tr>
+      

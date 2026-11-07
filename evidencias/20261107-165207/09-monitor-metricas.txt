@@ -1,0 +1,27 @@
+$ /usr/local/bin/citizentech-monitor --status; echo; cat /etc/citizentech/monitor.conf
+
+== Últimas métricas (/var/log/citizentech/metrics.log)
+2026-11-07T16:51:58-0300 cpu=11% mem=20% disco[/]=6% load="0.22 0.56 0.32" http=200
+2026-11-07T16:51:58-0300 cpu=3% mem=20% disco[/]=6% load="0.21 0.55 0.32" http=200
+2026-11-07T16:52:07-0300 cpu=60% mem=20% disco[/]=6% load="0.19 0.54 0.31" http=200
+
+== Últimos alertas (/var/log/citizentech/alerts.log)
+
+== Heartbeat: 0s atrás
+
+# Gerado por 03-monitoring.sh - 2026-11-07T16:51:57-03:00
+# Após editar: sudo systemctl reload citizentech-monitor
+INTERVAL=15
+CPU_WARN=70
+CPU_CRIT=90
+MEM_WARN=75
+MEM_CRIT=90
+DISK_WARN=80
+DISK_CRIT=90
+DISK_PATHS="/"
+ALERT_COOLDOWN=300
+ALERT_WEBHOOK_URL=""
+MONITOR_SERVICES="citizentech-app nginx"
+AUTO_HEAL=true
+APP_HEALTH_URL="http://127.0.0.1/health"
+LOG_DIR=/var/log/citizentech

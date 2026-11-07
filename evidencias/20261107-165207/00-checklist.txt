@@ -1,0 +1,21 @@
+[PASS] Hostname configurado (citizentech-srv01)
+[PASS] Resolução local de app.citizentech.local
+[PASS] DNS externo (github.com)
+[PASS] Rota padrão / conectividade
+[PASS] Firewall UFW ativo
+[PASS] Fuso horário America/Sao_Paulo
+[PASS] Usuário de serviço citizentech
+[PASS] Arquivo de variáveis /etc/citizentech/app.env
+[PASS] Serviço da aplicação ativo
+[PASS] Serviço da aplicação habilitado no boot
+[PASS] Nginx ativo
+[PASS] Aplicação responde via Nginx (app.citizentech.local)
+[PASS] Monitor ativo
+[PASS] Monitor habilitado no boot
+[PASS] Guardião (timer) ativo
+[PASS] Métricas sendo gravadas
+[PASS] auditd ativo
+[PASS] Log de auditoria dos scripts
+[PASS] Log de execução dos scripts
+
+PASS=19 FAIL=0

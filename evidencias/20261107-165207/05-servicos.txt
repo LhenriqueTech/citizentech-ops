@@ -1,0 +1,88 @@
+$ systemctl status citizentech-app nginx citizentech-monitor citizentech-monitor-guard.timer auditd --no-pager -l
+
+● citizentech-app.service - CitizenTech - Aplicação Web (python)
+     Loaded: loaded (/etc/systemd/system/citizentech-app.service; enabled; vendor preset: enabled)
+     Active: active (running) since Sat 2026-11-07 16:51:56 -03; 11s ago
+   Main PID: 8209 (gunicorn)
+      Tasks: 3 (limit: 2307)
+     Memory: 40.1M
+        CPU: 133ms
+     CGroup: /system.slice/citizentech-app.service
+             ├─8209 /opt/citizentech/venv/bin/python3 /opt/citizentech/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:5000 --access-logfile - app:app
+             ├─8245 /opt/citizentech/venv/bin/python3 /opt/citizentech/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:5000 --access-logfile - app:app
+             └─8246 /opt/citizentech/venv/bin/python3 /opt/citizentech/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:5000 --access-logfile - app:app
+
+Nov 07 16:51:56 citizentech-srv01 citizentech-app[8245]: [2026-11-07 16:51:56 -0300] [8245] [INFO] Booting worker with pid: 8245
+Nov 07 16:51:56 citizentech-srv01 citizentech-app[8246]: [2026-11-07 16:51:56 -0300] [8246] [INFO] Booting worker with pid: 8246
+Nov 07 16:51:57 citizentech-srv01 citizentech-app[8245]: 127.0.0.1 - - [07/Nov/2026:16:51:57 -0300] "GET /health HTTP/1.1" 200 123 "-" "curl/7.81.0"
+Nov 07 16:51:57 citizentech-srv01 citizentech-app[8245]: 127.0.0.1 - - [07/Nov/2026:16:51:57 -0300] "GET /health HTTP/1.1" 200 123 "-" "curl/7.81.0"
+Nov 07 16:51:58 citizentech-srv01 citizentech-app[8245]: 127.0.0.1 - - [07/Nov/2026:16:51:58 -0300] "GET /health HTTP/1.1" 200 123 "-" "curl/7.81.0"
+Nov 07 16:51:58 citizentech-srv01 citizentech-app[8245]: 127.0.0.1 - - [07/Nov/2026:16:51:58 -0300] "GET /health HTTP/1.1" 200 123 "-" "curl/7.81.0"
+Nov 07 16:52:07 citizentech-srv01 citizentech-app[8245]: 127.0.0.1 - - [07/Nov/2026:16:52:07 -0300] "GET /health HTTP/1.1" 200 124 "-" "curl/7.81.0"
+Nov 07 16:52:07 citizentech-srv01 citizentech-app[8245]: 127.0.0.1 - - [07/Nov/2026:16:52:07 -0300] "GET /health HTTP/1.1" 200 124 "-" "curl/7.81.0"
+Nov 07 16:52:08 citizentech-srv01 citizentech-app[8246]: 127.0.0.1 - - [07/Nov/2026:16:52:08 -0300] "GET /health HTTP/1.1" 200 124 "-" "curl/7.81.0"
+Nov 07 16:52:08 citizentech-srv01 citizentech-app[8245]: 127.0.0.1 - - [07/Nov/2026:16:52:08 -0300] "GET / HTTP/1.1" 200 1448 "-" "curl/7.81.0"
+
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Sat 2026-11-07 16:51:57 -03; 11s ago
+       Docs: man:nginx(8)
+   Main PID: 8346 (nginx)
+      Tasks: 3 (limit: 2307)
+     Memory: 3.3M
+        CPU: 11ms
+     CGroup: /system.slice/nginx.service
+             ├─8346 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+             ├─8347 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+             └─8348 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+
+Nov 07 16:51:57 citizentech-srv01 systemd[1]: nginx.service: Deactivated successfully.
+Nov 07 16:51:57 citizentech-srv01 systemd[1]: Stopped A high performance web server and a reverse proxy server.
+Nov 07 16:51:57 citizentech-srv01 systemd[1]: Starting A high performance web server and a reverse proxy server...
+Nov 07 16:51:57 citizentech-srv01 systemd[1]: Started A high performance web server and a reverse proxy server.
+
+● citizentech-monitor.service - CitizenTech - Monitor de CPU, Memória, Disco e Serviços
+     Loaded: loaded (/etc/systemd/system/citizentech-monitor.service; enabled; vendor preset: enabled)
+     Active: active (running) since Sat 2026-11-07 16:52:06 -03; 1s ago
+   Main PID: 8678 (bash)
+      Tasks: 2 (limit: 2307)
+     Memory: 784.0K
+        CPU: 46ms
+     CGroup: /system.slice/citizentech-monitor.service
+             ├─8678 bash /usr/local/bin/citizentech-monitor
+             └─9103 sleep 15
+
+Nov 07 16:52:06 citizentech-srv01 systemd[1]: citizentech-monitor.service: Scheduled restart job, restart counter is at 1.
+Nov 07 16:52:06 citizentech-srv01 systemd[1]: Stopped CitizenTech - Monitor de CPU, Memória, Disco e Serviços.
+Nov 07 16:52:06 citizentech-srv01 systemd[1]: Started CitizenTech - Monitor de CPU, Memória, Disco e Serviços.
+
+● citizentech-monitor-guard.timer - CitizenTech - Executa o guardião do monitor a cada minuto
+     Loaded: loaded (/etc/systemd/system/citizentech-monitor-guard.timer; enabled; vendor preset: enabled)
+     Active: active (waiting) since Sat 2026-11-07 16:51:57 -03; 10s ago
+    Trigger: Sat 2026-11-07 16:52:57 -03; 49s left
+   Triggers: ● citizentech-monitor-guard.service
+
+Nov 07 16:51:57 citizentech-srv01 systemd[1]: Started CitizenTech - Executa o guardião do monitor a cada minuto.
+
+● auditd.service - Security Auditing Service
+     Loaded: loaded (/lib/systemd/system/auditd.service; enabled; vendor preset: enabled)
+     Active: active (running) since Sat 2026-11-07 16:47:59 -03; 4min 8s ago
+       Docs: man:auditd(8)
+             https://github.com/linux-audit/audit-documentation
+   Main PID: 3357 (auditd)
+      Tasks: 2 (limit: 2307)
+     Memory: 892.0K
+        CPU: 293ms
+     CGroup: /system.slice/auditd.service
+             └─3357 /sbin/auditd
+
+Nov 07 16:47:59 citizentech-srv01 augenrules[3370]: enabled 1
+Nov 07 16:47:59 citizentech-srv01 augenrules[3370]: failure 1
+Nov 07 16:47:59 citizentech-srv01 augenrules[3370]: pid 3357
+Nov 07 16:47:59 citizentech-srv01 augenrules[3370]: rate_limit 0
+Nov 07 16:47:59 citizentech-srv01 augenrules[3370]: backlog_limit 8192
+Nov 07 16:47:59 citizentech-srv01 augenrules[3370]: lost 0
+Nov 07 16:47:59 citizentech-srv01 augenrules[3370]: backlog 4
+Nov 07 16:47:59 citizentech-srv01 augenrules[3370]: backlog_wait_time 60000
+Nov 07 16:47:59 citizentech-srv01 augenrules[3370]: backlog_wait_time_actual 0
+Nov 07 16:47:59 citizentech-srv01 systemd[1]: Started Security Auditing Service.

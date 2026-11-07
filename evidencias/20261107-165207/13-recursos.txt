@@ -1,0 +1,21 @@
+$ uptime; free -h; df -h; echo; sar -u 1 3 2>/dev/null
+
+ 16:52:08 up 5 min,  0 users,  load average: 0.19, 0.54, 0.31
+               total        used        free      shared  buff/cache   available
+Mem:           1.9Gi       235Mi       550Mi       1.0Mi       1.2Gi       1.5Gi
+Swap:             0B          0B          0B
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           197M 1020K  196M   1% /run
+/dev/sda1        39G  2.3G   37G   6% /
+tmpfs           982M     0  982M   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+vagrant         931G  240G  691G  26% /vagrant
+tmpfs           197M  4.0K  197M   1% /run/user/1000
+
+Linux 5.15.0-203-generic (citizentech-srv01) 	11/07/26 	_x86_64_	(2 CPU)
+
+16:52:08        CPU     %user     %nice   %system   %iowait    %steal     %idle
+16:52:09        all      0.00      0.00      0.00      0.00      0.00    100.00
+16:52:10        all      0.00      0.00      0.00      0.00      0.00    100.00
+16:52:11        all      0.00      0.00      0.00      0.00      0.00    100.00
+Average:        all      0.00      0.00      0.00      0.00      0.00    100.00

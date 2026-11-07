@@ -1,0 +1,302 @@
+$ tail -n 300 /var/log/citizentech/provision.log
+
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+2026-11-07T16:48:34-0300 [INFO] [02-app.sh] [run=20261107-194749-2156] exec: systemctl enable nginx
+Synchronizing state of nginx.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install enable nginx
+2026-11-07T16:48:35-0300 [INFO] [02-app.sh] [run=20261107-194749-2156] exec: systemctl reload-or-restart nginx
+2026-11-07T16:48:35-0300 [OK] [02-app.sh] [run=20261107-194749-2156] <== nginx concluído
+2026-11-07T16:48:35-0300 [INFO] [02-app.sh] [run=20261107-194749-2156] ==> health_check
+2026-11-07T16:48:35-0300 [INFO] [02-app.sh] [run=20261107-194749-2156] Aguardando a aplicação responder em http://127.0.0.1:5000/health ...
+2026-11-07T16:48:35-0300 [OK] [02-app.sh] [run=20261107-194749-2156] Backend respondeu após ~2s.
+2026-11-07T16:48:35-0300 [ERROR] [02-app.sh] [run=20261107-194749-2156] Nginx devolveu HTTP 404 para /health
+2026-11-07T16:48:35-0300 [ERROR] [provision.sh] [run=20261107-194749-2156] Falha (rc=1) na etapa 'app', linha 34: bash "$PROJECT_ROOT/scripts/${STEPS[$s]}"
+2026-11-07T16:48:35-0300 [ERROR] [provision.sh] [run=20261107-194749-2156] Últimas linhas do log (/var/log/citizentech/provision.log):
+2026-11-07T16:51:40-0300 [INFO] [provision.sh] [run=20261107-165140-5914] PROVISIONAMENTO CITIZENTECH - run=20261107-165140-5914
+2026-11-07T16:51:40-0300 [INFO] [provision.sh] [run=20261107-165140-5914] Host: citizentech-srv01 | SO: Ubuntu 22.04.5 LTS | Etapas: infra app monitor audit validate
+2026-11-07T16:51:40-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] 01 - INFRAESTRUTURA (rede, DNS, hostname, IP)
+2026-11-07T16:51:40-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] ==> pacotes_base
+2026-11-07T16:51:40-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] exec: apt-get update -q
+Hit:1 http://archive.ubuntu.com/ubuntu jammy InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu jammy-updates InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu jammy-backports InRelease
+Hit:4 http://security.ubuntu.com/ubuntu jammy-security InRelease
+Reading package lists...
+2026-11-07T16:51:44-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] exec: apt-get install -y -q --no-install-recommends ca-certificates curl wget git jq bc rsync ufw dnsutils net-tools iproute2 sysstat htop logrotate auditd audispd-plugins stress-ng
+Reading package lists...
+Building dependency tree...
+Reading state information...
+bc is already the newest version (1.07.1-3build1).
+htop is already the newest version (3.0.5-7build2).
+auditd is already the newest version (1:3.0.7-1ubuntu0.1).
+ca-certificates is already the newest version (20260816ubuntu0.22.04.2).
+curl is already the newest version (7.81.0-1ubuntu1.30).
+git is already the newest version (1:2.34.1-1ubuntu1.18).
+iproute2 is already the newest version (5.15.0-1ubuntu2.2).
+jq is already the newest version (1.6-2.1ubuntu3.2).
+logrotate is already the newest version (3.19.0-1ubuntu1.1).
+net-tools is already the newest version (1.60+git20181103.0eebece-1ubuntu5.4).
+rsync is already the newest version (3.2.7-0ubuntu0.22.04.7).
+sysstat is already the newest version (12.5.2-2ubuntu0.2).
+ufw is already the newest version (0.36.1-4ubuntu0.1).
+wget is already the newest version (1.21.2-2ubuntu1.5).
+audispd-plugins is already the newest version (1:3.0.7-1ubuntu0.1).
+dnsutils is already the newest version (1:9.18.39-0ubuntu0.22.04.8).
+stress-ng is already the newest version (0.13.12-2ubuntu1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+2026-11-07T16:51:44-0300 [OK] [01-infra.sh] [run=20261107-165140-5914] <== pacotes_base concluído
+2026-11-07T16:51:44-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] ==> hostname
+2026-11-07T16:51:44-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] exec: hostnamectl set-hostname citizentech-srv01
+2026-11-07T16:51:45-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] Hostname: citizentech-srv01 | FQDN: citizentech-srv01.citizentech.local | app.citizentech.local -> 10.0.2.15
+2026-11-07T16:51:45-0300 [OK] [01-infra.sh] [run=20261107-165140-5914] <== hostname concluído
+2026-11-07T16:51:45-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] ==> rede_ip
+2026-11-07T16:51:45-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] Interface: enp0s3 | modo: dhcp
+2026-11-07T16:51:45-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] Modo DHCP: IP atual mantido (10.0.2.15).
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp0s3           UP             10.0.2.15/24 metric 100 fd17:625c:f037:2:f6:40ff:fe8d:afc3/64 fe80::f6:40ff:fe8d:afc3/64 
+enp0s8           UP             192.168.56.10/24 fe80::a00:27ff:fe62:f755/64 
+2026-11-07T16:51:45-0300 [OK] [01-infra.sh] [run=20261107-165140-5914] <== rede_ip concluído
+2026-11-07T16:51:45-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] ==> dns
+2026-11-07T16:51:45-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] exec: systemctl restart systemd-resolved
+2026-11-07T16:51:45-0300 [OK] [01-infra.sh] [run=20261107-165140-5914] DNS OK: github.com -> 4.228.31.150 | app.citizentech.local -> 10.0.2.15
+2026-11-07T16:51:45-0300 [OK] [01-infra.sh] [run=20261107-165140-5914] <== dns concluído
+2026-11-07T16:51:45-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] ==> fuso_ntp
+2026-11-07T16:51:45-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] exec: timedatectl set-timezone America/Sao_Paulo
+2026-11-07T16:51:45-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] exec: timedatectl set-ntp true
+2026-11-07T16:51:45-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] Data/hora: Sat Nov  7 16:51:45 -03 2026 (America/Sao_Paulo)
+2026-11-07T16:51:45-0300 [OK] [01-infra.sh] [run=20261107-165140-5914] <== fuso_ntp concluído
+2026-11-07T16:51:45-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] ==> firewall
+2026-11-07T16:51:45-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] exec: ufw default deny incoming
+Default incoming policy changed to 'deny'
+(be sure to update your rules accordingly)
+2026-11-07T16:51:47-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] exec: ufw default allow outgoing
+Default outgoing policy changed to 'allow'
+(be sure to update your rules accordingly)
+2026-11-07T16:51:49-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] exec: ufw allow 22/tcp
+Skipping adding existing rule
+Skipping adding existing rule (v6)
+2026-11-07T16:51:49-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] exec: ufw allow 80/tcp
+Skipping adding existing rule
+Skipping adding existing rule (v6)
+2026-11-07T16:51:49-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] exec: ufw --force enable
+Firewall is active and enabled on system startup
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), disabled (routed)
+New profiles: skip
+
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW IN    Anywhere                  
+80/tcp                     ALLOW IN    Anywhere                  
+22/tcp (v6)                ALLOW IN    Anywhere (v6)             
+80/tcp (v6)                ALLOW IN    Anywhere (v6)             
+
+2026-11-07T16:51:50-0300 [OK] [01-infra.sh] [run=20261107-165140-5914] <== firewall concluído
+2026-11-07T16:51:50-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] ==> sysstat
+2026-11-07T16:51:50-0300 [INFO] [01-infra.sh] [run=20261107-165140-5914] exec: systemctl enable --now sysstat
+Synchronizing state of sysstat.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install enable sysstat
+2026-11-07T16:51:50-0300 [OK] [01-infra.sh] [run=20261107-165140-5914] <== sysstat concluído
+2026-11-07T16:51:50-0300 [OK] [01-infra.sh] [run=20261107-165140-5914] Infraestrutura provisionada com sucesso.
+2026-11-07T16:51:50-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] 02 - APLICAÇÃO (código, dependências, configuração, serviço)
+2026-11-07T16:51:50-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] ==> pre_requisitos
+2026-11-07T16:51:50-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] exec: apt-get update -q
+Hit:1 http://archive.ubuntu.com/ubuntu jammy InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu jammy-updates InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu jammy-backports InRelease
+Hit:4 http://security.ubuntu.com/ubuntu jammy-security InRelease
+Reading package lists...
+2026-11-07T16:51:54-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] exec: apt-get install -y -q --no-install-recommends git rsync nginx curl ca-certificates unzip build-essential
+Reading package lists...
+Building dependency tree...
+Reading state information...
+build-essential is already the newest version (12.9ubuntu3).
+ca-certificates is already the newest version (20260816ubuntu0.22.04.2).
+curl is already the newest version (7.81.0-1ubuntu1.30).
+git is already the newest version (1:2.34.1-1ubuntu1.18).
+nginx is already the newest version (1.18.0-6ubuntu14.22).
+rsync is already the newest version (3.2.7-0ubuntu0.22.04.7).
+unzip is already the newest version (6.0-26ubuntu3.2).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+2026-11-07T16:51:55-0300 [OK] [02-app.sh] [run=20261107-165140-5914] <== pre_requisitos concluído
+2026-11-07T16:51:55-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] ==> usuario_app
+2026-11-07T16:51:55-0300 [OK] [02-app.sh] [run=20261107-165140-5914] <== usuario_app concluído
+2026-11-07T16:51:55-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] ==> codigo_fonte
+2026-11-07T16:51:55-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] exec: rsync -a --delete --exclude .git --exclude node_modules --exclude venv --exclude target --exclude bin --exclude obj /vagrant/app/ /opt/citizentech/src/
+2026-11-07T16:51:55-0300 [OK] [02-app.sh] [run=20261107-165140-5914] <== codigo_fonte concluído
+2026-11-07T16:51:55-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] ==> deteccao_stack
+2026-11-07T16:51:55-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] Tipo da aplicação: python
+2026-11-07T16:51:55-0300 [OK] [02-app.sh] [run=20261107-165140-5914] <== deteccao_stack concluído
+2026-11-07T16:51:55-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] ==> dependencias
+2026-11-07T16:51:55-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] exec: apt-get install -y -q --no-install-recommends python3 python3-venv python3-pip python3-dev
+Reading package lists...
+Building dependency tree...
+Reading state information...
+python3 is already the newest version (3.10.6-1~22.04.1).
+python3-dev is already the newest version (3.10.6-1~22.04.1).
+python3-pip is already the newest version (22.0.2+dfsg-1ubuntu0.7).
+python3-venv is already the newest version (3.10.6-1~22.04.1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+2026-11-07T16:51:55-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] exec: /opt/citizentech/venv/bin/pip install --upgrade pip wheel
+Requirement already satisfied: pip in /opt/citizentech/venv/lib/python3.10/site-packages (26.3)
+Requirement already satisfied: wheel in /opt/citizentech/venv/lib/python3.10/site-packages (0.48.0)
+Requirement already satisfied: packaging>=24.0 in /opt/citizentech/venv/lib/python3.10/site-packages (from wheel) (26.3)
+2026-11-07T16:51:55-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] exec: /opt/citizentech/venv/bin/pip install -r /opt/citizentech/src/requirements.txt
+Requirement already satisfied: Flask==3.0.3 in /opt/citizentech/venv/lib/python3.10/site-packages (from -r /opt/citizentech/src/requirements.txt (line 1)) (3.0.3)
+Requirement already satisfied: gunicorn==22.0.0 in /opt/citizentech/venv/lib/python3.10/site-packages (from -r /opt/citizentech/src/requirements.txt (line 2)) (22.0.0)
+Requirement already satisfied: Werkzeug>=3.0.0 in /opt/citizentech/venv/lib/python3.10/site-packages (from Flask==3.0.3->-r /opt/citizentech/src/requirements.txt (line 1)) (3.1.9)
+Requirement already satisfied: Jinja2>=3.1.2 in /opt/citizentech/venv/lib/python3.10/site-packages (from Flask==3.0.3->-r /opt/citizentech/src/requirements.txt (line 1)) (3.1.6)
+Requirement already satisfied: itsdangerous>=2.1.2 in /opt/citizentech/venv/lib/python3.10/site-packages (from Flask==3.0.3->-r /opt/citizentech/src/requirements.txt (line 1)) (2.2.0)
+Requirement already satisfied: click>=8.1.3 in /opt/citizentech/venv/lib/python3.10/site-packages (from Flask==3.0.3->-r /opt/citizentech/src/requirements.txt (line 1)) (8.5.1)
+Requirement already satisfied: blinker>=1.6.2 in /opt/citizentech/venv/lib/python3.10/site-packages (from Flask==3.0.3->-r /opt/citizentech/src/requirements.txt (line 1)) (1.9.0)
+Requirement already satisfied: packaging in /opt/citizentech/venv/lib/python3.10/site-packages (from gunicorn==22.0.0->-r /opt/citizentech/src/requirements.txt (line 2)) (26.3)
+Requirement already satisfied: MarkupSafe>=2.0 in /opt/citizentech/venv/lib/python3.10/site-packages (from Jinja2>=3.1.2->Flask==3.0.3->-r /opt/citizentech/src/requirements.txt (line 1)) (3.0.4)
+2026-11-07T16:51:55-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] exec: /opt/citizentech/venv/bin/pip install gunicorn
+Requirement already satisfied: gunicorn in /opt/citizentech/venv/lib/python3.10/site-packages (22.0.0)
+Requirement already satisfied: packaging in /opt/citizentech/venv/lib/python3.10/site-packages (from gunicorn) (26.3)
+2026-11-07T16:51:56-0300 [OK] [02-app.sh] [run=20261107-165140-5914] <== dependencias concluído
+2026-11-07T16:51:56-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] ==> variaveis_ambiente
+2026-11-07T16:51:56-0300 [OK] [02-app.sh] [run=20261107-165140-5914] <== variaveis_ambiente concluído
+2026-11-07T16:51:56-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] ==> servico_systemd
+2026-11-07T16:51:56-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] exec: systemctl daemon-reload
+2026-11-07T16:51:56-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] exec: systemctl enable citizentech-app
+2026-11-07T16:51:56-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] exec: systemctl restart citizentech-app
+2026-11-07T16:51:56-0300 [OK] [02-app.sh] [run=20261107-165140-5914] <== servico_systemd concluído
+2026-11-07T16:51:56-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] ==> nginx
+2026-11-07T16:51:56-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] exec: nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+2026-11-07T16:51:56-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] exec: systemctl enable nginx
+Synchronizing state of nginx.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install enable nginx
+2026-11-07T16:51:57-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] exec: systemctl restart nginx
+2026-11-07T16:51:57-0300 [OK] [02-app.sh] [run=20261107-165140-5914] <== nginx concluído
+2026-11-07T16:51:57-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] ==> health_check
+2026-11-07T16:51:57-0300 [INFO] [02-app.sh] [run=20261107-165140-5914] Aguardando a aplicação responder em http://127.0.0.1:5000/health ...
+2026-11-07T16:51:57-0300 [OK] [02-app.sh] [run=20261107-165140-5914] Backend respondeu após ~2s.
+2026-11-07T16:51:57-0300 [OK] [02-app.sh] [run=20261107-165140-5914] Aplicação publicada: http://app.citizentech.local  (HTTP 200 via Nginx)
+2026-11-07T16:51:57-0300 [OK] [02-app.sh] [run=20261107-165140-5914] <== health_check concluído
+2026-11-07T16:51:57-0300 [OK] [02-app.sh] [run=20261107-165140-5914] Aplicação provisionada com sucesso.
+2026-11-07T16:51:57-0300 [INFO] [03-monitoring.sh] [run=20261107-165140-5914] 03 - MONITORAMENTO (CPU, Memória, Disco + alertas)
+2026-11-07T16:51:57-0300 [INFO] [03-monitoring.sh] [run=20261107-165140-5914] ==> instalar_monitor
+2026-11-07T16:51:57-0300 [OK] [03-monitoring.sh] [run=20261107-165140-5914] <== instalar_monitor concluído
+2026-11-07T16:51:57-0300 [INFO] [03-monitoring.sh] [run=20261107-165140-5914] ==> config_monitor
+2026-11-07T16:51:57-0300 [INFO] [03-monitoring.sh] [run=20261107-165140-5914] Limites: CPU 70/90% | MEM 75/90% | DISCO 80/90% | intervalo 15s
+2026-11-07T16:51:57-0300 [OK] [03-monitoring.sh] [run=20261107-165140-5914] <== config_monitor concluído
+2026-11-07T16:51:57-0300 [INFO] [03-monitoring.sh] [run=20261107-165140-5914] ==> servico_monitor
+2026-11-07T16:51:57-0300 [INFO] [03-monitoring.sh] [run=20261107-165140-5914] exec: systemctl daemon-reload
+2026-11-07T16:51:57-0300 [INFO] [03-monitoring.sh] [run=20261107-165140-5914] exec: systemctl enable --now citizentech-monitor.service
+Created symlink /etc/systemd/system/multi-user.target.wants/citizentech-monitor.service → /etc/systemd/system/citizentech-monitor.service.
+2026-11-07T16:51:57-0300 [INFO] [03-monitoring.sh] [run=20261107-165140-5914] exec: systemctl restart citizentech-monitor.service
+2026-11-07T16:51:57-0300 [INFO] [03-monitoring.sh] [run=20261107-165140-5914] exec: systemctl enable --now citizentech-monitor-guard.timer
+Created symlink /etc/systemd/system/timers.target.wants/citizentech-monitor-guard.timer → /etc/systemd/system/citizentech-monitor-guard.timer.
+2026-11-07T16:51:57-0300 [OK] [03-monitoring.sh] [run=20261107-165140-5914] <== servico_monitor concluído
+2026-11-07T16:51:57-0300 [INFO] [03-monitoring.sh] [run=20261107-165140-5914] ==> teste_monitor
+2026-11-07T16:51:57-0300 [INFO] [03-monitoring.sh] [run=20261107-165140-5914] Coleta de teste:
+2026-11-07T16:51:58-0300 cpu=3% mem=20% disco[/]=6% load="0.21 0.55 0.32" http=200
+2026-11-07T16:52:01-0300 [INFO] [03-monitoring.sh] [run=20261107-165140-5914] Teste de tolerância a falhas: matando o monitor com SIGKILL...
+2026-11-07T16:52:06-0300 [OK] [03-monitoring.sh] [run=20261107-165140-5914] Monitor reiniciado automaticamente pelo systemd (PID 8556 -> 8678 em ~5s).
+2026-11-07T16:52:06-0300 [OK] [03-monitoring.sh] [run=20261107-165140-5914] <== teste_monitor concluído
+2026-11-07T16:52:06-0300 [OK] [03-monitoring.sh] [run=20261107-165140-5914] Monitoramento ativo. Alertas em /var/log/citizentech/alerts.log | journalctl -t citizentech-monitor
+2026-11-07T16:52:06-0300 [INFO] [04-audit.sh] [run=20261107-165140-5914] 04 - AUDITORIA E LOGS
+2026-11-07T16:52:06-0300 [INFO] [04-audit.sh] [run=20261107-165140-5914] ==> auditd
+2026-11-07T16:52:06-0300 [INFO] [04-audit.sh] [run=20261107-165140-5914] exec: systemctl enable auditd
+Synchronizing state of auditd.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install enable auditd
+2026-11-07T16:52:07-0300 [INFO] [04-audit.sh] [run=20261107-165140-5914] exec: augenrules --load
+No rules
+enabled 1
+failure 1
+pid 3357
+rate_limit 0
+backlog_limit 8192
+lost 0
+backlog 0
+backlog_wait_time 60000
+backlog_wait_time_actual 0
+enabled 1
+failure 1
+pid 3357
+rate_limit 0
+backlog_limit 8192
+lost 0
+backlog 4
+backlog_wait_time 60000
+backlog_wait_time_actual 0
+enabled 1
+failure 1
+pid 3357
+rate_limit 0
+backlog_limit 8192
+lost 0
+backlog 4
+backlog_wait_time 60000
+backlog_wait_time_actual 0
+2026-11-07T16:52:07-0300 [INFO] [04-audit.sh] [run=20261107-165140-5914] Regras ativas: 13
+2026-11-07T16:52:07-0300 [OK] [04-audit.sh] [run=20261107-165140-5914] <== auditd concluído
+2026-11-07T16:52:07-0300 [INFO] [04-audit.sh] [run=20261107-165140-5914] ==> journald
+2026-11-07T16:52:07-0300 [INFO] [04-audit.sh] [run=20261107-165140-5914] exec: systemctl restart systemd-journald
+2026-11-07T16:52:07-0300 [OK] [04-audit.sh] [run=20261107-165140-5914] <== journald concluído
+2026-11-07T16:52:07-0300 [INFO] [04-audit.sh] [run=20261107-165140-5914] ==> logrotate
+2026-11-07T16:52:07-0300 [INFO] [04-audit.sh] [run=20261107-165140-5914] exec: logrotate -d /etc/logrotate.d/citizentech
+WARNING: logrotate in debug mode does nothing except printing debug messages!  Consider using verbose mode (-v) instead if this is not what you want.
+
+reading config file /etc/logrotate.d/citizentech
+Reading state from file: /var/lib/logrotate/status
+state file /var/lib/logrotate/status does not exist
+Allocating hash table for state file, size 64 entries
+
+Handling 1 logs
+
+rotating pattern: /var/log/citizentech/*.log  after 1 days (14 rotations)
+empty log files are not rotated, log files >= 20971520 are rotated earlier, old logs are removed
+considering log /var/log/citizentech/audit.log
+Creating new state
+  Now: 2026-11-07 16:52
+  Last rotated at 2026-11-07 16:00
+  log does not need rotating (log has already been rotated)
+considering log /var/log/citizentech/metrics.log
+Creating new state
+  Now: 2026-11-07 16:52
+  Last rotated at 2026-11-07 16:00
+  log does not need rotating (log has already been rotated)
+considering log /var/log/citizentech/monitor.log
+Creating new state
+  Now: 2026-11-07 16:52
+  Last rotated at 2026-11-07 16:00
+  log does not need rotating (log has already been rotated)
+considering log /var/log/citizentech/provision.log
+Creating new state
+  Now: 2026-11-07 16:52
+  Last rotated at 2026-11-07 16:00
+  log does not need rotating (log has already been rotated)
+2026-11-07T16:52:07-0300 [OK] [04-audit.sh] [run=20261107-165140-5914] <== logrotate concluído
+2026-11-07T16:52:07-0300 [INFO] [04-audit.sh] [run=20261107-165140-5914] ==> relatorio
+2026-11-07T16:52:07-0300 [OK] [04-audit.sh] [run=20261107-165140-5914] Relatório salvo em /var/log/citizentech/relatorio-auditoria-20261107-165207.txt
+2026-11-07T16:52:07-0300 [OK] [04-audit.sh] [run=20261107-165140-5914] <== relatorio concluído
+2026-11-07T16:52:07-0300 [OK] [04-audit.sh] [run=20261107-165140-5914] Auditoria configurada. Logs: /var/log/citizentech/provision.log | /var/log/citizentech/audit.log
+2026-11-07T16:52:07-0300 [INFO] [05-validate.sh] [run=20261107-165140-5914] 05 - VALIDAÇÃO E EVIDÊNCIAS
+2026-11-07T16:52:07-0300 [INFO] [05-validate.sh] [run=20261107-165140-5914] ==> checklist
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Hostname configurado (citizentech-srv01)
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Resolução local de app.citizentech.local
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - DNS externo (github.com)
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Rota padrão / conectividade
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Firewall UFW ativo
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Fuso horário America/Sao_Paulo
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Usuário de serviço citizentech
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Arquivo de variáveis /etc/citizentech/app.env
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Serviço da aplicação ativo
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Serviço da aplicação habilitado no boot
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Nginx ativo
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Aplicação responde via Nginx (app.citizentech.local)
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Monitor ativo
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Monitor habilitado no boot
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Guardião (timer) ativo
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Métricas sendo gravadas
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - auditd ativo
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Log de auditoria dos scripts
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] PASS - Log de execução dos scripts
+2026-11-07T16:52:07-0300 [OK] [05-validate.sh] [run=20261107-165140-5914] <== checklist concluído
+2026-11-07T16:52:07-0300 [INFO] [05-validate.sh] [run=20261107-165140-5914] ==> evidencias

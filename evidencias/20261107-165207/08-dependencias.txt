@@ -1,0 +1,14 @@
+$ cat /opt/citizentech/dependencias-python.txt 2>/dev/null; node -v 2>/dev/null; java -version 2>&1 | head -1; dotnet --version 2>/dev/null; python3 --version; nginx -v 2>&1
+
+blinker==1.9.0
+click==8.5.1
+Flask==3.0.3
+gunicorn==22.0.0
+itsdangerous==2.2.0
+Jinja2==3.1.6
+MarkupSafe==3.0.4
+packaging==26.3
+Werkzeug==3.1.9
+bash: line 1: java: command not found
+Python 3.10.12
+nginx version: nginx/1.18.0 (Ubuntu)
