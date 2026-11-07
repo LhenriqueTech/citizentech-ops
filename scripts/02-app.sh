@@ -145,7 +145,7 @@ install_dependencies() {
 
 write_environment() {
   local tmp; tmp="$(mktemp)"
-  [[ -f "$PROJECT_ROOT/config/app.env" ]] && cp "$PROJECT_ROOT/config/app.env" "$tmp"
+  [[ -f "$PROJECT_ROOT/config/app.env.example" ]] && cp "$PROJECT_ROOT/config/app.env.example" "$tmp"
   # Preserva valores já existentes no servidor (ex.: segredos colocados à mão)
   if [[ -f "$ENV_FILE" ]]; then
     while IFS='=' read -r k v; do
