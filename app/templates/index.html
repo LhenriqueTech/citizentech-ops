@@ -1,34 +1,119 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ app_name }}</title>
-  <style>
-    body { font-family: system-ui, sans-serif; margin: 0; background: #0f172a; color: #e2e8f0; }
-    header { padding: 32px 40px; background: #111827; border-bottom: 3px solid #e11d48; }
-    h1 { margin: 0; font-size: 28px; }
-    main { padding: 32px 40px; max-width: 900px; }
-    .meta { color: #94a3b8; font-size: 14px; margin-top: 6px; }
-    table { width: 100%; border-collapse: collapse; background: #f8fafc; color: #0f172a; border-radius: 6px; overflow: hidden; }
-    th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #e2e8f0; }
-    th { background: #e2e8f0; }
-    a { color: #fb7185; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ app_name }} · Semáforo Inteligente</title>
+<style>
+  :root { --bg:#0b1220; --panel:#111827; --line:#1f2a3d; --txt:#e5e7eb; --mut:#94a3b8;
+          --red:#e11d48; --green:#22c55e; --amber:#f59e0b; --blue:#60a5fa; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--txt); }
+  header { display:flex; align-items:center; justify-content:space-between; padding:18px 28px; border-bottom:3px solid var(--red); background:#0f172a; }
+  h1 { margin:0; font-size:24px; } h1 small { color:var(--mut); font-weight:400; font-size:15px; margin-left:8px; }
+  .meta { color:var(--mut); font-size:13px; } .meta a { color:#fb7185; }
+  main { display:grid; grid-template-columns: 1fr 340px; gap:20px; padding:20px 28px; }
+  .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:18px; }
+  .kpi { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+  .kpi b { display:block; font-size:28px; margin-top:4px; } .kpi span { color:var(--mut); font-size:13px; }
+  .kpi.good b { color:var(--green); } .kpi.warn b { color:var(--amber); }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px; position:relative; }
+  .card.emergencia { border-color:var(--red); box-shadow:0 0 0 2px rgba(225,29,72,.35); }
+  .card.seguranca { border-color:var(--amber); }
+  .card h3 { margin:0 0 2px; font-size:15px; } .card .id { color:var(--mut); font-size:12px; }
+  .badge { display:inline-block; margin-left:6px; font-size:10.5px; padding:3px 8px; border-radius:99px; background:#1e293b; color:var(--mut); text-transform:uppercase; letter-spacing:.04em; }
+  .badge.emergencia { background:var(--red); color:#fff; } .badge.seguranca { background:var(--amber); color:#111; } .badge.adaptativo { background:#14532d; color:#bbf7d0; }
+  .cross { display:grid; grid-template-columns:60px 70px 60px; grid-template-rows:42px 70px 42px; gap:4px; justify-content:center; margin:12px 0 8px; }
+  .road { background:#1e293b; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--mut); position:relative; overflow:hidden; }
+  .road .q { position:absolute; left:0; bottom:0; background:rgba(96,165,250,.35); width:100%; }
+  .road.h .q { top:0; height:100%; width:0; }
+  .road span { position:relative; }
+  .center { background:#0f172a; border-radius:8px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; }
+  .light { width:14px; height:14px; border-radius:50%; background:#3f0d18; display:inline-block; }
+  .light.on { background:var(--green); box-shadow:0 0 10px var(--green); }
+  .light.red { background:var(--red); }
+  .lights { display:flex; gap:6px; font-size:11px; color:var(--mut); align-items:center; }
+  .info { display:flex; justify-content:space-between; font-size:12px; color:var(--mut); }
+  .info b { color:var(--txt); }
+  aside .box { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:14px; }
+  aside h2 { font-size:15px; margin:0 0 10px; }
+  button { width:100%; padding:12px; border:0; border-radius:10px; background:var(--red); color:#fff; font-weight:700; font-size:15px; cursor:pointer; }
+  button:hover { filter:brightness(1.1); }
+  #eventos { list-style:none; margin:0; padding:0; font-size:12.5px; max-height:470px; overflow:auto; }
+  #eventos li { padding:7px 0; border-bottom:1px solid var(--line); } #eventos time { color:var(--mut); margin-right:6px; }
+  #eventos .onda_verde { color:#fda4af; } #eventos .alerta { color:#fcd34d; } #eventos .recuperacao { color:#86efac; }
+  .api { font-family:ui-monospace,Consolas,monospace; font-size:12px; color:var(--mut); line-height:1.7; }
+</style>
 </head>
 <body>
-  <header>
-    <h1>{{ app_name }}</h1>
-    <div class="meta">Servidor: {{ host }} &middot; Ambiente: {{ env }} &middot; <a href="/health">/health</a></div>
-  </header>
-  <main>
-    <h2>Solicitações dos cidadãos</h2>
-    <table>
-      <tr><th>#</th><th>Tipo</th><th>Bairro</th><th>Status</th></tr>
-      {% for r in requests %}
-      <tr><td>{{ r.id }}</td><td>{{ r.tipo }}</td><td>{{ r.bairro }}</td><td>{{ r.status }}</td></tr>
-      {% endfor %}
-    </table>
-  </main>
+<header>
+  <div>
+    <h1>🚦 Semáforo Inteligente <small>{{ app_name }} · Central de Controle · {{ cidade }}</small></h1>
+  </div>
+  <div class="meta">Servidor: <b>{{ host }}</b> · Ambiente: {{ env }} · v{{ versao }} · <a href="/health">/health</a> · <a href="/api/cruzamentos">/api</a></div>
+</header>
+<main>
+  <section>
+    <div class="kpis">
+      <div class="kpi"><span>Cruzamentos online</span><b id="k-online">–</b></div>
+      <div class="kpi"><span>Veículos em fila agora</span><b id="k-fila">–</b></div>
+      <div class="kpi good"><span>Redução da espera vs. ciclo fixo</span><b id="k-ganho">–</b></div>
+      <div class="kpi warn"><span>Ondas verdes ativas</span><b id="k-emerg">–</b></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+  <aside>
+    <div class="box">
+      <h2>Prioridade para emergências</h2>
+      <button id="btn-amb">🚑 Simular ambulância (onda verde)</button>
+    </div>
+    <div class="box">
+      <h2>Eventos</h2>
+      <ul id="eventos"></ul>
+    </div>
+    <div class="box api">
+      GET  /api/cruzamentos<br>GET  /api/metricas<br>GET  /api/eventos<br>POST /api/sensores<br>POST /api/emergencias
+    </div>
+  </aside>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+const MAXQ = 40;
+function card(c) {
+  const ns = c.fase_verde === 'NS';
+  const q = v => Math.min(100, c.filas[v] / MAXQ * 100);
+  const modoTxt = {adaptativo:'adaptativo', emergencia:'onda verde', seguranca:'segurança'}[c.modo];
+  return `<div class="card ${c.modo}">
+    <h3>${c.nome}</h3><div class="id">${c.id} · ${c.origem}<span class="badge ${c.modo}">${modoTxt}</span></div>
+    <div class="cross">
+      <div></div><div class="road"><div class="q" style="height:${q('N')}%"></div><span>N ${c.filas.N}</span></div><div></div>
+      <div class="road h"><div class="q" style="width:${q('O')}%"></div><span>O ${c.filas.O}</span></div>
+      <div class="center">
+        <div class="lights">NS <i class="light ${ns ? 'on' : 'red'}"></i></div>
+        <div class="lights">LO <i class="light ${!ns ? 'on' : 'red'}"></i></div>
+        <b style="font-size:13px">${c.restante_s}s</b>
+      </div>
+      <div class="road h"><div class="q" style="width:${q('L')}%"></div><span>L ${c.filas.L}</span></div>
+      <div></div><div class="road"><div class="q" style="height:${q('S')}%"></div><span>S ${c.filas.S}</span></div><div></div>
+    </div>
+    <div class="info"><span>Verde NS <b>${c.verde_s.NS}s</b> · LO <b>${c.verde_s.LO}s</b></span><span><b>${c.fluxo_veic_min}</b> veíc/min</span></div>
+  </div>`;
+}
+async function atualizar() {
+  try {
+    const [cz, m, ev] = await Promise.all(['/api/cruzamentos', '/api/metricas', '/api/eventos?limit=25']
+      .map(u => fetch(u).then(r => r.json())));
+    $('#grid').innerHTML = cz.map(card).join('');
+    $('#k-online').textContent = `${m.online}/${m.cruzamentos}`;
+    $('#k-fila').textContent = m.veiculos_em_fila;
+    $('#k-ganho').textContent = `${m.reducao_espera_pct}%`;
+    $('#k-emerg').textContent = m.em_emergencia;
+    $('#eventos').innerHTML = ev.map(e => `<li class="${e.tipo}"><time>${e.ts}</time>${e.mensagem}</li>`).join('');
+  } catch (e) { console.warn(e); }
+}
+$('#btn-amb').onclick = async () => { await fetch('/painel/onda-verde', {method: 'POST'}); atualizar(); };
+atualizar(); setInterval(atualizar, 2000);
+</script>
 </body>
 </html>
