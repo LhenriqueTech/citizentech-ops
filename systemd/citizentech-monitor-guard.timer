@@ -1,0 +1,11 @@
+[Unit]
+Description=CitizenTech - Executa o guardião do monitor a cada minuto
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=1min
+AccuracySec=5s
+Persistent=true
+
+[Install]
+WantedBy=timers.target

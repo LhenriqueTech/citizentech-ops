@@ -1,0 +1,7 @@
+# Verifica se o monitor está ativo E vivo (heartbeat recente). Se não, reinicia.
+[Unit]
+Description=CitizenTech - Guardião do monitor (watchdog por heartbeat)
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/citizentech-monitor-guard

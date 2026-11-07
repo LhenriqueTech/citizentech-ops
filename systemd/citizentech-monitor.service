@@ -1,0 +1,29 @@
+# CitizenTech - Monitor de infraestrutura como serviço tolerante a falhas
+#  - Restart=always + StartLimitIntervalSec=0 : reinicia sempre, sem limite de tentativas
+#  - OOMScoreAdjust negativo                  : último a ser morto se faltar memória
+#  - RuntimeDirectory                          : estado/heartbeat em /run (recriado a cada boot)
+#  - Vigiado pelo citizentech-monitor-guard.timer (detecta travamento via heartbeat)
+[Unit]
+Description=CitizenTech - Monitor de CPU, Memória, Disco e Serviços
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/citizentech-monitor
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+RestartSec=5
+KillMode=mixed
+TimeoutStopSec=15
+RuntimeDirectory=citizentech-monitor
+RuntimeDirectoryPreserve=yes
+OOMScoreAdjust=-900
+Nice=-5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=citizentech-monitor
+
+[Install]
+WantedBy=multi-user.target
