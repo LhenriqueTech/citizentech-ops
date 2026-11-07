@@ -1,6 +1,8 @@
 # CitizenTech · Provisionamento automatizado em Linux
 
-Projeto de **Operating Systems** (Global Solution). Um único comando cria a infraestrutura de uma VM Linux, instala e configura a aplicação web **CitizenTech**, liga o monitoramento com alertas e registra tudo em logs de auditoria. Nada é feito à mão.
+Projeto de **Operating Systems** (Global Solution). Um único comando cria a infraestrutura de uma VM Linux, instala e configura a aplicação web da nossa CitizenTech, a **Central de Controle do Semáforo Inteligente**, liga o monitoramento com alertas e registra tudo em logs de auditoria. Nada é feito à mão.
+
+🎬 **Vídeo de demonstração (6 min):** [`docs/CitizenTech-GS-OperatingSystems.mp4`](docs/CitizenTech-GS-OperatingSystems.mp4). Todas as telas de terminal e do navegador são capturas reais da VM; a narração foi gerada com voz sintética (ElevenLabs).
 
 ```bash
 sudo bash provision.sh
@@ -44,6 +46,29 @@ flowchart LR
   end
 ```
 
+## 3.1 A aplicação: Semáforo Inteligente
+
+A CitizenTech da equipe é um **sistema de semáforos adaptativos**: cada cruzamento mede as filas por via e a Central decide o tempo de verde, em vez do ciclo fixo. Ambulâncias ganham **ondas verdes**. A pasta `app/` contém a **Central de Controle** que esta infraestrutura hospeda:
+
+| Recurso | Detalhe |
+|---|---|
+| Dashboard web (`/`) | Cruzamentos em tempo real: filas N/S/L/O, semáforo, tempo restante, modo (adaptativo, onda verde, segurança), eventos e KPIs |
+| API REST | `GET /api/cruzamentos`, `GET /api/cruzamentos/<id>`, `GET /api/metricas`, `GET /api/eventos`, `POST /api/sensores`, `POST /api/emergencias` |
+| Algoritmo | Divide o ciclo (`CICLO_S`) entre NS e LO proporcionalmente às filas, respeitando o verde mínimo (`VERDE_MIN_S`); calcula a redução de espera em relação ao ciclo fixo |
+| Segurança da API | `POST` exigem `Authorization: Bearer $API_TOKEN` (token em `/etc/citizentech/app.env`, permissão 640) |
+| Persistência | Banco SQLite em `/var/lib/citizentech` (`DATA_DIR`), fora do código e preservado entre deploys |
+| Sensores | Simulador embutido (um único worker do Gunicorn o executa, via `flock`) + `app/sensor_simulado.py`, que faz o papel do Raspberry de um cruzamento |
+| Tolerância a falhas | Se um sensor para de enviar dados por 20 s, o cruzamento entra em **modo de segurança** (ciclo fixo) e volta sozinho quando os dados retornam |
+
+```bash
+# dentro da VM (vagrant ssh)
+curl -s http://app.citizentech.local/api/metricas | jq
+TOKEN=$(sudo grep ^API_TOKEN= /etc/citizentech/app.env | cut -d= -f2)
+python3 /opt/citizentech/src/sensor_simulado.py C04 --url http://app.citizentech.local --token $TOKEN
+curl -s -X POST http://app.citizentech.local/api/emergencias -H "Authorization: Bearer $TOKEN" \
+     -H 'Content-Type: application/json' -d '{"rota":["C01","C02","C03"],"duracao_s":40}'
+```
+
 ## 4. Estrutura do repositório
 
 ```
@@ -65,8 +90,8 @@ flowchart LR
 │   └── citizentech-monitor-guard.sh
 ├── systemd/                     # units do monitor e do guardião
 ├── tools/simulate-load.sh       # provoca falhas e carga para a demonstração
-├── app/                         # app CitizenTech de exemplo (Flask)
-├── docs/roteiro-video.md        # roteiro do vídeo de 7 minutos
+├── app/                         # Semáforo Inteligente: API + dashboard (Flask, SQLite) + sensor_simulado.py
+├── docs/                        # vídeo de demonstração + roteiro
 └── evidencias/                  # saídas geradas pelo 05-validate.sh
 ```
 
@@ -103,9 +128,9 @@ sudo bash provision.sh infra app          # só algumas etapas
 
 Etapas disponíveis: `infra`, `app`, `monitor`, `audit` e `validate`.
 
-## 6. Usando a aplicação da outra disciplina
+## 6. Trocando ou adicionando aplicações
 
-Edite `config/citizentech.conf` (ou passe as variáveis na linha de comando). A stack é detectada automaticamente pelos arquivos do projeto:
+Por padrão o provisionamento hospeda o Semáforo Inteligente de `app/`. Para hospedar outra parte da CitizenTech (por exemplo, a API Spring Boot ou o dashboard .NET de outra disciplina), edite `config/citizentech.conf` (ou passe as variáveis na linha de comando). A stack é detectada automaticamente pelos arquivos do projeto:
 
 | Arquivo encontrado | Stack | Como sobe |
 |---|---|---|
@@ -193,7 +218,7 @@ sudo aureport -k -i --summary                               # resumo do auditd
 
 ### Resultado da execução de referência
 
-Execução em 07/11/2026 numa VM Ubuntu 22.04 (VirtualBox 7.2.22 + Vagrant 2.4.9, Windows 11): **19 PASS / 0 FAIL**. As evidências estão em [`evidencias/20261107-165207/`](evidencias/20261107-165207/00-checklist.txt).
+Execução em 07/11/2026 numa VM Ubuntu 22.04 (VirtualBox 7.2.22 + Vagrant 2.4.9, Windows 11), já com o Semáforo Inteligente: **19 PASS / 0 FAIL**. As evidências estão em [`evidencias/20261107-181221/`](evidencias/20261107-181221/00-checklist.txt).
 
 ## 10. Solução de problemas
 

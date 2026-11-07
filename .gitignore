@@ -10,3 +10,4 @@ vagrant-install.log
 setup-windows.log
 diagnostico.txt
 _to_delete/
+app/data/
