@@ -112,7 +112,13 @@ check_services() {
       LEVEL[svc_$svc]="CRITICAL"
       if [[ "$AUTO_HEAL" == "true" ]]; then
         if systemctl restart "$svc" 2>/dev/null; then
-          send_alert RECOVERY "servico:$svc" "reiniciado automaticamente (auto-heal)"
+          # espera a aplicação voltar a responder antes de declarar recuperação (evita falso 502)
+          local w=0
+          while (( w < 20 )); do
+            if [[ -z "$APP_HEALTH_URL" ]] || curl -fsS -o /dev/null -m 2 "$APP_HEALTH_URL" 2>/dev/null; then break; fi
+            sleep 1; w=$((w + 1))
+          done
+          send_alert RECOVERY "servico:$svc" "reiniciado automaticamente (auto-heal), respondendo após ${w}s"
           LEVEL[svc_$svc]="OK"
         fi
       fi
