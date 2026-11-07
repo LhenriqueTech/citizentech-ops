@@ -4,8 +4,8 @@
 #  04 - Auditoria e logs
 #  auditd (quem alterou configs/app/scripts), journald persistente,
 #  rotação de logs e relatório de auditoria das execuções.
-#    sudo ./scripts/04-audit.sh            # configura + relatório
-#    sudo ./scripts/04-audit.sh --report   # só o relatório
+#    sudo bash scripts/04-audit.sh            # configura + relatório
+#    sudo bash scripts/04-audit.sh --report   # só o relatório
 # =============================================================================
 source "$(dirname "$0")/lib/common.sh"
 
