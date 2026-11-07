@@ -32,16 +32,15 @@ sudo ./provision.sh
 
 ```mermaid
 flowchart LR
-  U[Usuário / navegador] -->|HTTP :80| N[Nginx<br/>proxy reverso]
-  N -->|127.0.0.1:5000| A[citizentech-app.service<br/>Gunicorn / Node / Java / .NET]
-  A --- E[/etc/citizentech/app.env/]
-  M[citizentech-monitor.service] -->|CPU · MEM · DISCO · HTTP| A
-  M -->|alertas| L[(/var/log/citizentech<br/>alerts · metrics · audit)]
-  M -->|auto-heal| A
-  G[guard.timer · 1 min] -->|heartbeat| M
-  AU[auditd] --> L
-  subgraph VM Ubuntu 22.04 · citizentech-srv01
-    N; A; E; M; G; AU; L
+  U["Usuário / navegador"] -->|"HTTP :80"| N["Nginx (proxy reverso)"]
+  subgraph VM["VM Ubuntu 22.04 - citizentech-srv01"]
+    N -->|"127.0.0.1:5000"| A["citizentech-app.service<br/>Gunicorn / Node / Java / .NET"]
+    A --- E["/etc/citizentech/app.env"]
+    M["citizentech-monitor.service"] -->|"CPU, memória, disco, HTTP"| A
+    M -->|"alertas"| L[("/var/log/citizentech<br/>alerts, metrics, audit")]
+    M -->|"auto-heal"| A
+    G["guard.timer (1 min)"] -->|"heartbeat"| M
+    AU["auditd"] --> L
   end
 ```
 
@@ -119,7 +118,7 @@ sudo APP_SOURCE=git APP_REPO_URL=https://github.com/equipe/citizentech-web.git \
 sudo APP_SOURCE=git APP_REPO_URL=https://github.com/equipe/citizentech-api.git APP_HEALTH_PATH=/ ./provision.sh
 ```
 
-Segredos (URL de banco, chaves de API) ficam em `config/app.env.example` ou direto em `/etc/citizentech/app.env`. Esse arquivo tem permissão `640` e os valores que já estão no servidor são preservados quando o provisionamento roda de novo.
+`config/app.env.example` é o modelo versionado (sem segredos). Segredos reais (URL de banco, chaves de API) vão direto em `/etc/citizentech/app.env` na VM. Esse arquivo tem permissão `640` e os valores que já estão no servidor são preservados quando o provisionamento roda de novo.
 
 ## 7. Monitoramento e alertas
 
