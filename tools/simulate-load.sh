@@ -3,12 +3,12 @@
 #  Ferramenta de demonstração (para o vídeo): provoca situações que o monitor
 #  deve detectar e mostra os alertas/recuperações em tempo real.
 #
-#  sudo ./tools/simulate-load.sh cpu  [segundos]   # CPU a 100%
-#  sudo ./tools/simulate-load.sh mem  [segundos]   # ocupa memória acima do limite
-#  sudo ./tools/simulate-load.sh disk [segundos]   # enche o disco acima do limite
-#  sudo ./tools/simulate-load.sh kill-monitor      # kill -9 no monitor (systemd revive)
-#  sudo ./tools/simulate-load.sh stop-app          # derruba a aplicação (auto-heal)
-#  sudo ./tools/simulate-load.sh hang-monitor      # congela o monitor (guardião revive)
+#  sudo bash tools/simulate-load.sh cpu  [segundos]   # CPU a 100%
+#  sudo bash tools/simulate-load.sh mem  [segundos]   # ocupa memória acima do limite
+#  sudo bash tools/simulate-load.sh disk [segundos]   # enche o disco acima do limite
+#  sudo bash tools/simulate-load.sh kill-monitor      # kill -9 no monitor (systemd revive)
+#  sudo bash tools/simulate-load.sh stop-app          # derruba a aplicação (auto-heal)
+#  sudo bash tools/simulate-load.sh hang-monitor      # congela o monitor (guardião revive)
 # =============================================================================
 set -euo pipefail
 [[ $EUID -eq 0 ]] || { echo "Use sudo." >&2; exit 1; }
