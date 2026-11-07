@@ -2,8 +2,8 @@
 # =============================================================================
 #  CitizenTech - Orquestrador do provisionamento completo
 #
-#  sudo ./provision.sh                 # executa tudo (01 -> 05)
-#  sudo ./provision.sh infra app       # executa só as etapas escolhidas
+#  sudo bash provision.sh                 # executa tudo (01 -> 05)
+#  sudo bash provision.sh infra app       # executa só as etapas escolhidas
 #  Etapas: infra | app | monitor | audit | validate
 # =============================================================================
 source "$(dirname "$0")/scripts/lib/common.sh"

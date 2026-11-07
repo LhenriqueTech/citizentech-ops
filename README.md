@@ -3,7 +3,7 @@
 Projeto de **Operating Systems** (Global Solution). Um único comando cria a infraestrutura de uma VM Linux, instala e configura a aplicação web **CitizenTech**, liga o monitoramento com alertas e registra tudo em logs de auditoria. Nada é feito à mão.
 
 ```bash
-sudo ./provision.sh
+sudo bash provision.sh
 ```
 
 ---
@@ -75,8 +75,8 @@ flowchart LR
 ### Opção A: Vagrant + VirtualBox (recomendado, 100% automático)
 
 ```bash
-git clone <este-repositorio> && cd <este-repositorio>
-vagrant up            # cria a VM e roda ./provision.sh sozinho
+git clone https://github.com/LhenriqueTech/citizentech-ops.git && cd citizentech-ops
+vagrant up            # cria a VM e roda o provision.sh sozinho
 ```
 Acesse **http://localhost:8080** ou **http://192.168.56.10**. Para repetir o provisionamento, rode `vagrant provision` (os scripts são idempotentes).
 
@@ -84,9 +84,9 @@ Acesse **http://localhost:8080** ou **http://192.168.56.10**. Para repetir o pro
 
 ```bash
 sudo apt-get update && sudo apt-get install -y git
-git clone <este-repositorio> && cd <este-repositorio>
-sudo ./provision.sh                    # tudo
-sudo ./provision.sh infra app          # só algumas etapas
+git clone https://github.com/LhenriqueTech/citizentech-ops.git && cd citizentech-ops
+sudo bash provision.sh                    # tudo
+sudo bash provision.sh infra app          # só algumas etapas
 ```
 
 Etapas disponíveis: `infra`, `app`, `monitor`, `audit` e `validate`.
@@ -108,14 +108,14 @@ Exemplos:
 ```bash
 # Spring Boot que está na pasta backend/ de outro repositório
 sudo APP_SOURCE=git APP_REPO_URL=https://github.com/equipe/citizentech-java.git \
-     APP_SUBDIR=backend APP_PORT=8080 APP_HEALTH_PATH=/actuator/health ./provision.sh
+     APP_SUBDIR=backend APP_PORT=8080 APP_HEALTH_PATH=/actuator/health bash provision.sh
 
 # Front-end React/Vite (build gerado e servido pelo Nginx)
 sudo APP_SOURCE=git APP_REPO_URL=https://github.com/equipe/citizentech-web.git \
-     APP_TYPE=static APP_BUILD_CMD="npm run build" ./provision.sh
+     APP_TYPE=static APP_BUILD_CMD="npm run build" bash provision.sh
 
 # API Node que não tem /health
-sudo APP_SOURCE=git APP_REPO_URL=https://github.com/equipe/citizentech-api.git APP_HEALTH_PATH=/ ./provision.sh
+sudo APP_SOURCE=git APP_REPO_URL=https://github.com/equipe/citizentech-api.git APP_HEALTH_PATH=/ bash provision.sh
 ```
 
 `config/app.env.example` é o modelo versionado (sem segredos). Segredos reais (URL de banco, chaves de API) vão direto em `/etc/citizentech/app.env` na VM. Esse arquivo tem permissão `640` e os valores que já estão no servidor são preservados quando o provisionamento roda de novo.
@@ -149,13 +149,13 @@ citizentech-monitor --once         # uma coleta agora
 
 | Falha | Quem recupera | Como demonstrar |
 |---|---|---|
-| Monitor morto (`kill -9`, crash) | systemd, com `Restart=always` em 5 s | `sudo ./tools/simulate-load.sh kill-monitor` |
-| Monitor travado (sem heartbeat) | guardião (`timer` a cada 1 min) | `sudo ./tools/simulate-load.sh hang-monitor` |
-| Aplicação ou Nginx parados | auto-heal do monitor + `Restart=always` | `sudo ./tools/simulate-load.sh stop-app` |
+| Monitor morto (`kill -9`, crash) | systemd, com `Restart=always` em 5 s | `sudo bash tools/simulate-load.sh kill-monitor` |
+| Monitor travado (sem heartbeat) | guardião (`timer` a cada 1 min) | `sudo bash tools/simulate-load.sh hang-monitor` |
+| Aplicação ou Nginx parados | auto-heal do monitor + `Restart=always` | `sudo bash tools/simulate-load.sh stop-app` |
 | Falta de memória | `OOMScoreAdjust=-900` (o kernel mata outros processos antes do monitor) | – |
 | Reboot da VM | todos os serviços habilitados no boot | `sudo reboot` |
 
-Para gerar carga e ver os alertas: `sudo ./tools/simulate-load.sh cpu 60`, `mem 60` ou `disk 30`.
+Para gerar carga e ver os alertas: `sudo bash tools/simulate-load.sh cpu 60`, `mem 60` ou `disk 30`.
 
 ## 8. Logs de auditoria e execução
 
@@ -163,7 +163,7 @@ Para gerar carga e ver os alertas: `sudo ./tools/simulate-load.sh cpu 60`, `mem 
 |---|---|
 | `/var/log/citizentech/provision.log` | Execução detalhada: cada comando executado e a saída dele |
 | `/var/log/citizentech/audit.log` | Trilha de auditoria: `data\|run\|user\|sudo_user\|host\|script\|action\|status\|detail` |
-| `/var/log/citizentech/relatorio-auditoria-*.txt` | Relatório consolidado (`sudo ./scripts/04-audit.sh --report`) |
+| `/var/log/citizentech/relatorio-auditoria-*.txt` | Relatório consolidado (`sudo bash scripts/04-audit.sh --report`) |
 | `auditd` (`ausearch -k ct_config -i`) | Quem alterou rede, DNS, Nginx, serviços, `app.env` e usuários |
 | `journalctl -t citizentech-provision` | As mesmas mensagens dos scripts, no journal persistente |
 
@@ -177,7 +177,7 @@ sudo aureport -k -i --summary                               # resumo do auditd
 
 ## 9. Evidências técnicas
 
-`sudo ./provision.sh validate` (ou `sudo ./scripts/05-validate.sh`) cria `evidencias/<data-hora>/` com o checklist e as saídas de `hostnamectl`, `ip`, `resolvectl`, `ufw`, `systemctl status`, `curl`, métricas, alertas, auditoria e `auditd`. Faça commit dessa pasta junto com o repositório.
+`sudo bash provision.sh validate` (ou `sudo bash scripts/05-validate.sh`) cria `evidencias/<data-hora>/` com o checklist e as saídas de `hostnamectl`, `ip`, `resolvectl`, `ufw`, `systemctl status`, `curl`, métricas, alertas, auditoria e `auditd`. Faça commit dessa pasta junto com o repositório.
 
 ## 10. Solução de problemas
 
@@ -190,4 +190,10 @@ sudo aureport -k -i --summary                               # resumo do auditd
 | IP estático sem rede | use `NET_MODE=static` apenas na interface *host-only* (`NET_IFACE`) |
 
 ---
-**Integrantes:** _preencher nome e RM_
+## Integrantes
+
+| Nome | RM |
+|---|---|
+| Léo Masago | RM557768 |
+| Eduardo Tomazela | RM556807 |
+| Luiz Henrique | RM555235 |
