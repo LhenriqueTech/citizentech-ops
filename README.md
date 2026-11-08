@@ -182,6 +182,18 @@ citizentech-monitor --status       # últimas métricas, alertas e heartbeat
 citizentech-monitor --once         # uma coleta agora
 ```
 
+### Testes de falha (com evidências)
+
+`tools/teste-falhas.sh` executa os testes pedidos na atividade e grava a saída em [`evidencias/testes-falha/`](evidencias/testes-falha/). No Windows, `TESTES-FALHA.bat` roda os três em sequência, incluindo a reinicialização da VM.
+
+| Teste | Como | Resultado esperado | Evidência |
+|---|---|---|---|
+| Falha controlada em script | `sudo bash tools/teste-falhas.sh script` (roda `tools/falha-controlada.sh`, que tenta copiar um arquivo inexistente) | Script para no erro, código de saída 1; `status=FAIL` no `audit.log`, `ERROR` no `provision.log` e no journal, com etapa, linha e comando | `01-falha-controlada-script.txt` |
+| Monitor interrompido manualmente | `sudo bash tools/teste-falhas.sh monitor` (`systemctl stop`) | O guardião (`citizentech-monitor-guard.timer`) detecta e reinicia o monitor sozinho; `restart` e `reload` também testados | `02-monitor-parado-recuperado.txt` |
+| Reinicialização da VM | `pre-reboot` → `vagrant reload` → `pos-reboot` | Novo `boot_id`; aplicação, Nginx, monitor, guardião e auditd voltam ativos sem nenhum comando manual | `03-reboot-vm.txt` |
+| Monitor morto (`kill -9`) e app parada | `tools/simulate-load.sh kill-monitor` / `stop-app` | systemd reinicia o monitor; auto-heal reinicia a aplicação | vídeo + `screenshots/11-*.jpg` |
+| CPU, memória e disco altos | `tools/simulate-load.sh cpu\|mem\|disk` | Alerta WARNING/CRITICAL e depois RECOVERY | vídeo + `screenshots/08-10*.jpg` |
+
 ### Tolerância a falhas
 
 | Falha | Quem recupera | Como demonstrar |
@@ -213,6 +225,11 @@ sudo aureport -k -i --summary                               # resumo do auditd
 ```
 
 ## 9. Evidências técnicas
+
+- [`evidencias/screenshots/`](evidencias/screenshots/): capturas de tela do dashboard e das telas de terminal (provisionamento, rede, serviços, API, alertas, falhas, auditoria e validação).
+- [`evidencias/testes-falha/`](evidencias/testes-falha/): saídas dos testes de falha e de reinicialização.
+- `evidencias/<data-hora>/`: saídas coletadas automaticamente pelo `05-validate.sh`.
+
 
 `sudo bash provision.sh validate` (ou `sudo bash scripts/05-validate.sh`) cria `evidencias/<data-hora>/` com o checklist e as saídas de `hostnamectl`, `ip`, `resolvectl`, `ufw`, `systemctl status`, `curl`, métricas, alertas, auditoria e `auditd`. Faça commit dessa pasta junto com o repositório.
 
