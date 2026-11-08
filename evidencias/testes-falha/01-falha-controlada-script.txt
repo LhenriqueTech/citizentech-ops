@@ -1,0 +1,31 @@
+=== TESTE 1 - Falha controlada em script | 2026-11-08 19:28:50 -0300 | host citizentech-srv01 ===
+
+$ bash /vagrant/tools/falha-controlada.sh 2>&1 | tail -n 12; echo "código de saída: ${PIPESTATUS[0]}"
+2026-11-07T18:12:24-0300 [INFO] [provision.sh] [run=20261107-181157-17877] RESUMO
+2026-11-07T18:12:24-0300 [OK] [provision.sh] [run=20261107-181157-17877] Provisionamento concluído. Acesse: http://app.citizentech.local (ou http://10.0.2.15)
+2026-11-07T18:12:24-0300 [INFO] [provision.sh] [run=20261107-181157-17877] Logs: /var/log/citizentech/provision.log | Auditoria: /var/log/citizentech/audit.log | Alertas: /var/log/citizentech/alerts.log
+2026-11-08T19:28:50-0300 [INFO] [falha-controlada.sh] [run=20261108-192850-1568] TESTE - FALHA CONTROLADA
+2026-11-08T19:28:50-0300 [INFO] [falha-controlada.sh] [run=20261108-192850-1568] ==> verificar_diretorio_config
+2026-11-08T19:28:50-0300 [INFO] [falha-controlada.sh] [run=20261108-192850-1568] exec: test -d /etc/citizentech
+2026-11-08T19:28:50-0300 [OK] [falha-controlada.sh] [run=20261108-192850-1568] <== verificar_diretorio_config concluído
+2026-11-08T19:28:50-0300 [INFO] [falha-controlada.sh] [run=20261108-192850-1568] ==> copiar_config_inexistente
+2026-11-08T19:28:50-0300 [INFO] [falha-controlada.sh] [run=20261108-192850-1568] exec: cp /etc/citizentech/arquivo-que-nao-existe.conf /tmp/
+cp: cannot stat '/etc/citizentech/arquivo-que-nao-existe.conf': No such file or directory
+2026-11-08T19:28:50-0300 [ERROR] [falha-controlada.sh] [run=20261108-192850-1568] Falha (rc=1) na etapa 'copiar_config_inexistente', linha 73: cp /etc/citizentech/arquivo-que-nao-existe.conf /tmp/
+2026-11-08T19:28:50-0300 [ERROR] [falha-controlada.sh] [run=20261108-192850-1568] Últimas linhas do log (/var/log/citizentech/provision.log):
+código de saída: 1
+
+$ awk -v t='2026-11-08T19:28:50-0300' '$1>=t' /var/log/citizentech/audit.log | grep falha-controlada | cut -d'|' -f1,6-9
+2026-11-08T19:28:50-0300|script=falha-controlada.sh|action=script_inicio|status=OK|detail=args= config=/vagrant/config/citizentech.conf
+2026-11-08T19:28:50-0300|script=falha-controlada.sh|action=verificar_diretorio_config|status=OK|detail=
+2026-11-08T19:28:50-0300|script=falha-controlada.sh|action=copiar_config_inexistente|status=FAIL|detail=rc=1 linha=73 cmd=cp /etc/citizentech/arquivo-que-nao-existe.conf /tmp/
+2026-11-08T19:28:50-0300|script=falha-controlada.sh|action=script_fim|status=FAIL|detail=rc=1 duracao=0s
+
+$ awk -v t='2026-11-08T19:28:50-0300' '$1>=t' /var/log/citizentech/provision.log | grep -E 'ERROR' | head -n 3
+2026-11-08T19:28:50-0300 [ERROR] [falha-controlada.sh] [run=20261108-192850-1568] Falha (rc=1) na etapa 'copiar_config_inexistente', linha 73: cp /etc/citizentech/arquivo-que-nao-existe.conf /tmp/
+2026-11-08T19:28:50-0300 [ERROR] [falha-controlada.sh] [run=20261108-192850-1568] Últimas linhas do log (/var/log/citizentech/provision.log):
+
+$ journalctl -t citizentech-provision --since '-5min' -p err --no-pager | tail -n 3
+Nov 08 19:28:50 citizentech-srv01 citizentech-provision[1613]: [falha-controlada.sh] Falha (rc=1) na etapa 'copiar_config_inexistente', linha 73: cp /etc/citizentech/arquivo-que-nao-existe.conf /tmp/
+Nov 08 19:28:50 citizentech-srv01 citizentech-provision[1616]: [falha-controlada.sh] Últimas linhas do log (/var/log/citizentech/provision.log):
+

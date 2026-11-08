@@ -1,0 +1,39 @@
+=== TESTE 3 - Reinicialização da VM | 2026-11-08 19:30:28 -0300 | host citizentech-srv01 ===
+
+## ANTES do reboot
+$ cat /proc/sys/kernel/random/boot_id; uptime -s
+122a7225-b052-4ffe-a60d-0cab299dfa36
+2026-11-08 19:28:17
+
+$ for s in citizentech-app nginx citizentech-monitor citizentech-monitor-guard.timer auditd; do printf '%-36s %-8s %s\n' $s $(systemctl is-enabled $s) $(systemctl is-active $s); done
+citizentech-app                      enabled  active
+nginx                                enabled  active
+citizentech-monitor                  enabled  active
+citizentech-monitor-guard.timer      enabled  active
+auditd                               enabled  active
+
+## DEPOIS do reboot (vagrant reload) - nenhum script foi executado manualmente
+
+$ cat /proc/sys/kernel/random/boot_id; uptime -s
+072d974a-9844-46d1-b717-e1eb5bce095a
+2026-11-08 19:30:46
+
+$ for s in citizentech-app nginx citizentech-monitor citizentech-monitor-guard.timer auditd; do printf '%-36s %-8s %s\n' $s $(systemctl is-enabled $s) $(systemctl is-active $s); done
+citizentech-app                      enabled  active
+nginx                                enabled  active
+citizentech-monitor                  enabled  active
+citizentech-monitor-guard.timer      enabled  active
+auditd                               enabled  active
+
+$ curl -s -o /dev/null -w 'HTTP %{http_code}\n' http://app.citizentech.local/health; curl -s http://app.citizentech.local/api/metricas | jq -c '{cruzamentos, online, reducao_espera_pct}'
+HTTP 200
+{"cruzamentos":6,"online":5,"reducao_espera_pct":46.7}
+
+$ journalctl -b -u citizentech-monitor -u citizentech-app --no-pager | grep -E 'Started' | tail -n 2
+Nov 08 19:31:08 citizentech-srv01 systemd[1]: Started CitizenTech - Monitor de CPU, Memória, Disco e Serviços.
+Nov 08 19:31:08 citizentech-srv01 systemd[1]: Started CitizenTech - Aplicação Web (python).
+
+$ tail -n 2 /var/log/citizentech/metrics.log
+2026-11-08T19:31:10-0300 cpu=100% mem=16% disco[/]=6% load="0.06 0.02 0.00" http=200
+2026-11-08T19:31:26-0300 cpu=0% mem=18% disco[/]=6% load="0.23 0.06 0.02" http=200
+

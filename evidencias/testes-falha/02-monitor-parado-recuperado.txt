@@ -1,0 +1,31 @@
+=== TESTE 2 - Monitor interrompido manualmente (systemctl stop) | 2026-11-08 19:28:53 -0300 | host citizentech-srv01 ===
+
+$ systemctl is-active citizentech-monitor; systemctl show -p MainPID --value citizentech-monitor
+active
+714
+
+$ systemctl stop citizentech-monitor; systemctl is-active citizentech-monitor
+inactive
+
+$ systemctl list-timers citizentech-monitor-guard.timer --no-pager | head -n 2
+NEXT                        LEFT          LAST                        PASSED  UNIT                            ACTIVATES
+Sun 2026-11-08 19:30:17 -03 1min 23s left Sat 2026-11-07 23:59:29 -03 19h ago citizentech-monitor-guard.timer citizentech-monitor-guard.service
+
+# monitor voltou após ~95s sem intervenção manual
+
+$ systemctl is-active citizentech-monitor; systemctl show -p MainPID --value citizentech-monitor
+active
+1780
+
+$ awk -v t='2026-11-08T19:28:53-0300' '$1>=t' /var/log/citizentech/alerts.log | grep -i guardi
+2026-11-08T19:30:18-0300 [CRITICAL] host=citizentech-srv01 recurso=monitor guardião reiniciou o monitor: serviço inativo
+
+$ journalctl -t citizentech-guard --since '-5min' --no-pager | tail -n 2
+Nov 08 19:30:18 citizentech-srv01 citizentech-guard[1778]: 2026-11-08T19:30:18-0300 [CRITICAL] host=citizentech-srv01 recurso=monitor guardião reiniciou o monitor: serviço inativo
+
+$ systemctl restart citizentech-monitor && systemctl is-active citizentech-monitor
+active
+
+$ systemctl reload citizentech-monitor && sleep 1 && tail -n 1 /var/log/citizentech/monitor.log
+2026-11-08T19:30:24-0300 [INFO] HUP recebido: recarregando /etc/citizentech/monitor.conf
+
